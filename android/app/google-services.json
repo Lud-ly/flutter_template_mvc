@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "587216056098",
+    "project_id": "who-whats",
+    "storage_bucket": "who-whats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587216056098:android:95de075c1ce70e8212bf7b",
+        "android_client_info": {
+          "package_name": "com.example.whowhats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587216056098-b4217fbiri76j42l3uuofu2m3n9e1sh9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYXVc7qT0qy2qGG6WxMLKq0mqCAsgC0go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587216056098-b4217fbiri76j42l3uuofu2m3n9e1sh9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
