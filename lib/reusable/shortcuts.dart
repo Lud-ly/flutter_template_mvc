@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-import 'package:whowhats/screen/login.dart';
-import 'package:whowhats/reusable/user_lib.dart';
-// import 'package:money2/money2.dart';
-import 'package:decimal/decimal.dart';
-
 class CodeShortcuts {
   static MaterialStateProperty<Color> getColor(Color color) {
     return MaterialStateProperty.all(color);

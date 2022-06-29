@@ -1,15 +1,28 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:whowhats/auth/register.dart';
 import 'screen/welcome.dart';
 import 'screen/home.dart';
-import 'screen/signup.dart';
-import 'screen/login.dart';
+import 'auth/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      options: kIsWeb
+          ? const FirebaseOptions(
+              apiKey: "AIzaSyDYXVc7qT0qy2qGG6WxMLKq0mqCAsgC0go",
+              projectId: "who-whats",
+              messagingSenderId: "587216056098",
+              appId: "1:587216056098:android:95de075c1ce70e8212bf7b")
+          : const FirebaseOptions(
+              apiKey: "AIzaSyDYXVc7qT0qy2qGG6WxMLKq0mqCAsgC0go",
+              projectId: "who-whats",
+              messagingSenderId: "587216056098",
+              appId: "1:587216056098:android:95de075c1ce70e8212bf7b"));
   runApp(const MyApp());
 }
 
@@ -28,17 +41,12 @@ class MyApp extends StatelessWidget {
           secondary: const Color.fromRGBO(44, 55, 59, 1),
           tertiary: Color.fromARGB(255, 95, 231, 197),
         ),
-        fontFamily: 'PermanentMarker',
+        fontFamily: GoogleFonts.permanentMarker().toString(),
         primarySwatch: Colors.blue,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       initialRoute: 'welcome',
-      routes: {
-        'welcome': (context) => Welcome(),
-        'registration': (context) => Registration(),
-        'login': (context) => Login(),
-        'home': (context) => Home()
-      },
+      home: Home(),
     );
   }
 }

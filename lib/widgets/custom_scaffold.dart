@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../reusable/images_lib.dart';
+import '../reusable/lib_images.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'footer.dart';
@@ -13,27 +13,10 @@ class CustomScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: null,
-      //   actions: <Widget>[
-      //     IconButton(
-      //         icon: const Image(
-      //           image: AssetImage("assets/images/undraw_handcrafts_delete.png"),
-      //           height: 20,
-      //         ),
-      //         onPressed: () {
-      //           _auth.signOut();
-      //           Navigator.pop(context);
-
-      //           //Implement logout functionality
-      //         }),
-      //   ],
-      //   title: Text('Home Page'),
-      //   backgroundColor: Colors.lightBlueAccent,
-      // ),
       body: Center(
         child: Container(
           decoration: BoxDecoration(
+            color: Colors.transparent,
             image: DecorationImage(
               image: BACKGROUND,
               fit: BoxFit.cover,

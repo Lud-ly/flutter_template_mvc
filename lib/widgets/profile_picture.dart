@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:whowhats/widgets/rounded_image.dart';
 
-import '../screen/login.dart';
-import '../reusable/user_lib.dart';
+import '../auth/login.dart';
+import '../reusable/lib_user.dart';
 
 class ProfilePicture extends StatelessWidget {
   const ProfilePicture({Key? key}) : super(key: key);
@@ -36,11 +36,7 @@ class _WebImg extends StatelessWidget {
             //   Get.to(() => Login(AccountPage()));
             // }
           },
-          icon: RoundedImage(
-            picturePath,
-            50,
-            50,
-          ),
+          icon: RoundedImage(picturePath, 50, 50, ""),
           iconSize: 50,
         ));
   }
@@ -65,7 +61,7 @@ class _PhoneImg extends StatelessWidget {
           //   Get.to(() => const LoginPage(AccountPage()));
           // }
         },
-        icon: RoundedImage(picturePath, imgHeight, imgHeight),
+        icon: RoundedImage(picturePath, imgHeight, imgHeight, ""),
         iconSize: imgHeight,
       ),
     );

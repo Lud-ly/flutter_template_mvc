@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:whowhats/screen/login.dart';
-import 'package:whowhats/screen/signup.dart';
+import 'package:whowhats/auth/login.dart';
+import 'package:whowhats/auth/register.dart';
 import 'package:get/get.dart';
+import 'package:whowhats/reusable/lib_images.dart';
+import 'package:whowhats/widgets/custom_scaffold.dart';
+import 'package:whowhats/widgets/rounded_image.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -14,63 +17,50 @@ class Welcome extends StatefulWidget {
 class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
-    const topColor = Colors.black26;
-    const bottomColor = Colors.white10;
-
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: Container(
-        margin: EdgeInsets.only(top: 30),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
           image: DecorationImage(
-            image: AssetImage("assets/images/undraw_handcrafts_welcome.png"),
-            fit: BoxFit.contain,
+            image: BACKGROUND2,
+            fit: BoxFit.cover,
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+        child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const Image(
-                image: AssetImage("assets/images/undraw_breakfast_psiw.png"),
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  Get.to(() => RegisterPage());
+                },
+                icon: Image(
+                    image:
+                        AssetImage("assets/images/undraw_handcrafts_user.png"),
+                    width: 60,
+                    alignment: Alignment.center),
+                //icon data for elevated button
+                label: Text("S'inscrire"), //label text
+                style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).colorScheme.tertiary,
+                    elevation: 2 //elevated btton background color
+                    ),
               ),
               ElevatedButton.icon(
-                label: const Text(
-                  "Enter",
-                  style: TextStyle(fontSize: 14, color: Colors.black12),
-                ),
-                icon: Icon(
-                  Icons.login_outlined,
-                  size: 30,
-                  color: Theme.of(context).colorScheme.tertiary,
-                ),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                ),
                 onPressed: () {
                   Get.to(() => Login());
                 },
-              ),
-              ElevatedButton.icon(
-                label: const Text(
-                  "S'inscrire",
-                  style: TextStyle(fontSize: 14, color: Colors.black12),
-                ),
-                icon: Icon(
-                  Icons.app_registration_rounded,
-                  size: 30,
-                  color: Theme.of(context).colorScheme.tertiary,
-                ),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                ),
-                onPressed: () {
-                  Get.to(() => Registration());
-                },
+                label: Text("Se connecter"), //label text
+                icon: Image(
+                    image: AssetImage(
+                        "assets/images/undraw_handcrafts_curved_arrow.png"),
+                    width: 50,
+                    alignment:
+                        Alignment.center), //icon data for elevated button
+                style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).colorScheme.tertiary,
+                    elevation: 2 //elevated btton background color
+                    ),
               ),
             ],
           ),

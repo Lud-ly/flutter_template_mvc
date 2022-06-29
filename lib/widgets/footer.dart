@@ -2,12 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:whowhats/auth/register.dart';
 import 'package:whowhats/widgets/rounded_image.dart';
-import '../reusable/images_lib.dart';
+import '../reusable/lib_images.dart';
 import '../reusable/shortcuts.dart';
 import '../screen/home.dart';
-import '../screen/login.dart';
-import '../screen/signup.dart';
+import '../auth/login.dart';
 
 class Footer extends StatefulWidget {
   final ScrollController? _scrollControlleur;
@@ -19,7 +19,7 @@ class Footer extends StatefulWidget {
 
 class _FooterState extends State<Footer> {
   bool _isHidden = false;
-  final double _footerHeight = kIsWeb ? 65 : 85;
+  final double _footerHeight = kIsWeb ? 85 : 65;
 
   @override
   void initState() {
@@ -103,20 +103,13 @@ class _BubbleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: CodeShortcuts.getAppWidth(context) * 0.3,
+      width: CodeShortcuts.getAppWidth(context) * 0.2,
       child: Column(
         children: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                textStyle:
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+          IconButton(
             onPressed: () => _goTo(_page),
-            child: RoundedImage(
-              _imagePath,
-              50,
-              50,
-            ),
+            icon: RoundedImage(_imagePath, 50, 50, ""),
+            iconSize: 60,
           ),
         ],
       ),
@@ -129,7 +122,7 @@ class _BubbleButton extends StatelessWidget {
         Get.to(() => Login());
         break;
       case _PageType.registration:
-        Get.to(() => Registration());
+        Get.to(() => const RegisterPage());
         break;
       case _PageType.home:
         Get.to(() => Home());
