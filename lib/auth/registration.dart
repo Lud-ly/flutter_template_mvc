@@ -1,6 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:whowhats/auth/login.dart';
 
 //code for designing the UI of our text field where the user writes his email id or password
 
@@ -44,13 +49,34 @@ class _RegistrationState extends State<Registration> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const Center(
+              Center(
                   child: Text(
-                "Who?Whats?",
-                style: TextStyle(fontSize: 30, fontFamily: "fantasy"),
+                "S'inscrire",
+                style:
+                    GoogleFonts.permanentMarker(fontSize: 40, color: primary),
               )),
               const Image(
                 image: AssetImage("assets/images/undraw_breakfast_psiw.png"),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "WW",
+                    style: GoogleFonts.permanentMarker(
+                      color: Colors.white,
+                      fontSize: 35,
+                      shadows: <Shadow>[
+                        const Shadow(
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 1.0,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
               TextField(
                   keyboardType: TextInputType.emailAddress,
@@ -60,7 +86,7 @@ class _RegistrationState extends State<Registration> {
                     //Do something with the user input.
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your email')),
+                      hintText: 'Entrer votre email')),
               SizedBox(
                 height: 8.0,
               ),
@@ -72,15 +98,21 @@ class _RegistrationState extends State<Registration> {
                     //Do something with the user input.
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your Password')),
+                      hintText: 'Entrer votre Password')),
               SizedBox(
                 height: 24.0,
               ),
               ElevatedButton(
-                child: Text('Register',
-                    style: TextStyle(
-                      fontFamily: 'fantasy',
-                    )),
+                child: Text(
+                  'S\'inscrire',
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber,
+                  padding: const EdgeInsets.all(2),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
                 onPressed: () {
                   setState(() {
                     showSpinner = true;
@@ -99,7 +131,23 @@ class _RegistrationState extends State<Registration> {
                     showSpinner = false;
                   });
                 },
-              )
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: secondary,
+                    padding: const EdgeInsets.all(2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  child: Text('Déja un compte ? Se connecter',
+                      style: TextStyle(
+                        color: primary,
+                        fontFamily: 'fantasy',
+                      )),
+                  onPressed: () {
+                    Get.to(() => Login());
+                  }),
             ],
           ),
         ),

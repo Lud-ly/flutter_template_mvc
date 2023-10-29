@@ -6,6 +6,8 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:whowhats/reusable/custom_scaffold.dart';
 
+import '../utils/custom_textstyles.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
@@ -155,7 +157,10 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               TextButton(
                 onPressed: _registering ? null : _register,
-                child: const Text('Register'),
+                child: Text(
+                  'Register',
+                  style: CustomTextStyle.small(fontColor: Colors.white),
+                ),
               ),
             ],
           ),

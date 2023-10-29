@@ -1,8 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
+import 'package:whowhats/auth/registration.dart';
 import 'package:whowhats/screens/home.dart';
+import 'package:whowhats/utils/custom_textstyles.dart';
+
+import '../reusable/shortcuts.dart';
 
 //code for designing the UI of our text field where the user writes his email id or password
 
@@ -35,20 +41,43 @@ class _LoginState extends State<Login> {
   late bool showSpinner = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/undraw5a.png"),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+    return Scaffold(
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              Center(
+                  child: Text(
+                "Connexion",
+                style: GoogleFonts.permanentMarker(fontSize: 40),
+              )),
+              const Image(
+                image: AssetImage("assets/images/undraw_breakfast_psiw.png"),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "WW",
+                    style: GoogleFonts.permanentMarker(
+                      color: Colors.white,
+                      fontSize: 35,
+                      shadows: <Shadow>[
+                        const Shadow(
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 1.0,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               TextField(
                   keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
@@ -57,7 +86,7 @@ class _LoginState extends State<Login> {
                     //Do something with the user input.
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your email',
+                    hintText: 'Votre email',
                   )),
               const SizedBox(
                 height: 8.0,
@@ -70,13 +99,12 @@ class _LoginState extends State<Login> {
                     //Do something with the user input.
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your password.')),
+                      hintText: 'Votre password.')),
               const SizedBox(
                 height: 24.0,
               ),
               TextButton(
-                  // color: Theme.of(context).colorScheme.tertiary,
-                  child: Text('Log In'),
+                  child: Text('Se connecter'),
                   onPressed: () async {
                     setState(() {
                       showSpinner = true;
@@ -94,6 +122,21 @@ class _LoginState extends State<Login> {
                       showSpinner = false;
                     });
                   }),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  child: Text(
+                    'S\'inscrire',
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.amber),
+                    foregroundColor: CodeShortcuts.getColor(Colors.black),
+                  ),
+                  onPressed: () {
+                    Get.to(() => Registration());
+                  },
+                ),
+              ),
             ],
           ),
         ),

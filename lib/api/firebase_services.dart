@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import '../utils/shortcuts.dart';
 
 class FirebaseServices {
@@ -43,6 +45,14 @@ class FirebaseServices {
           .user;
 
       if (user != null) {
+        await FirebaseChatCore.instance.createUserInFirestore(
+          types.User(
+            firstName: "un prénom",
+            id: user.uid,
+            imageUrl: 'https://i.pravatar.cc/300?u=$mail',
+            lastName: "un nom",
+          ),
+        );
         return user.uid;
       }
       return null;

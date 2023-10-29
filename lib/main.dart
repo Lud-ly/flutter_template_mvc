@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: const Color.fromRGBO(255, 93, 110, 1),
+          primary: Color.fromARGB(255, 6, 20, 131),
           secondary: const Color.fromRGBO(44, 55, 59, 1),
           tertiary: Color.fromARGB(255, 95, 231, 197),
         ),
