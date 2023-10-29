@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:whowhats/widgets/rounded_image.dart';
+import 'package:whowhats/reusable/rounded_image.dart';
 
 import '../auth/login.dart';
 import '../reusable/lib_user.dart';

@@ -88,6 +88,7 @@ class _RegistrationState extends State<Registration> {
                   try {
                     final newUser = _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
+                    print(newUser);
                     if (newUser != null) {
                       Navigator.pushNamed(context, 'home');
                     }

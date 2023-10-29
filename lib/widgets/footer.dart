@@ -2,61 +2,71 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:whowhats/auth/register.dart';
-import 'package:whowhats/widgets/rounded_image.dart';
-import '../reusable/lib_images.dart';
-import '../reusable/shortcuts.dart';
-import '../screen/home.dart';
-import '../auth/login.dart';
+import 'package:whowhats/screens/home.dart';
+import 'package:whowhats/screens/welcome.dart';
+import 'package:whowhats/utils/custom_textstyles.dart';
+import 'package:whowhats/utils/tools_lib.dart';
+
+import '../api/firebase_services.dart';
+import '../screens/account.dart';
+import '../screens/alarm.dart';
 
 class Footer extends StatefulWidget {
   final ScrollController? _scrollControlleur;
   const Footer([this._scrollControlleur, Key? key]) : super(key: key);
 
   @override
-  State<Footer> createState() => _FooterState();
+  State<Footer> createState() => FooterState();
 }
 
-class _FooterState extends State<Footer> {
+class FooterState extends State<Footer> {
   bool _isHidden = false;
-  final double _footerHeight = kIsWeb ? 85 : 65;
 
   @override
   void initState() {
     super.initState();
+
     widget._scrollControlleur?.addListener(_listen);
   }
 
   @override
   dispose() {
     widget._scrollControlleur?.removeListener(_listen);
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.086;
+
     Widget footer = SizedBox(
       height: _footerHeight,
+      width: SCREEN_WIDTH(context),
       child: Row(
         children: [
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const <Widget>[
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
                 _BubbleButton(
                   _PageType.home,
-                  "assets/images/undraw_handcrafts_house.png",
-                  key: const Key("Home"),
+                  Icon(Icons.home),
+                  "Home",
+                  key: const Key("goToHomeBtn"),
                 ),
                 _BubbleButton(
-                  _PageType.login,
-                  "assets/images/undraw_handcrafts_briefcase.png",
-                  key: const Key("search"),
+                  _PageType.alarm,
+                  Icon(Icons.alarm),
+                  "Alarme",
+                  key: const Key("goToBrowseBtn"),
                 ),
                 _BubbleButton(
-                  _PageType.registration,
-                  "assets/images/undraw_handcrafts_search.png",
-                  key: const Key("file"),
+                  _PageType.account,
+                  Icon(Icons.account_box),
+                  "Account",
+                  key: const Key("goToCommunityBtn"),
                 ),
               ],
             ),
@@ -95,21 +105,30 @@ class _FooterState extends State<Footer> {
 
 class _BubbleButton extends StatelessWidget {
   final _PageType _page;
-  final String _imagePath;
+  final String _text;
+  final Icon _icon;
 
-  const _BubbleButton(this._page, this._imagePath, {Key? key})
+  _BubbleButton(this._page, this._icon, this._text, {Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: CodeShortcuts.getAppWidth(context) * 0.2,
+      width: SCREEN_WIDTH(context) * 0.2,
       child: Column(
         children: [
-          IconButton(
-            onPressed: () => _goTo(_page),
-            icon: RoundedImage(_imagePath, 50, 50, ""),
-            iconSize: 60,
+          Flexible(
+            child: IconButton(
+              onPressed: () => _goTo(_page),
+              color: Color.fromARGB(255, 6, 20, 131),
+              icon: _icon,
+              iconSize: kIsWeb ? 35 : SCREEN_HEIGHT(context) * 0.06,
+            ),
+          ),
+          Text(
+            _text,
+            style: CustomTextStyle.small(fontColor: Colors.black),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -118,17 +137,19 @@ class _BubbleButton extends StatelessWidget {
 
   _goTo(_PageType page) {
     switch (page) {
-      case _PageType.login:
-        Get.to(() => Login());
-        break;
-      case _PageType.registration:
-        Get.to(() => const RegisterPage());
-        break;
       case _PageType.home:
-        Get.to(() => Home());
+        Get.to(() => HomePage());
+        break;
+      case _PageType.alarm:
+        Get.to(() => AlarmPage());
+        break;
+      case _PageType.account:
+        FirebaseServices.disconnect();
+        Get.to(() => Welcome());
+
         break;
     }
   }
 }
 
-enum _PageType { login, registration, home }
+enum _PageType { home, alarm, account }

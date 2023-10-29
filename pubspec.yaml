@@ -53,6 +53,7 @@ dependencies:
   open_file: ^3.2.1
   faker: ^2.0.0
   flutter_launcher_icons: ^0.9.3
+  fading_widget_animation: ^0.0.1
 
 
 dev_dependencies:

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
+import 'package:whowhats/screens/home.dart';
 
 //code for designing the UI of our text field where the user writes his email id or password
 
@@ -72,8 +74,8 @@ class _LoginState extends State<Login> {
               const SizedBox(
                 height: 24.0,
               ),
-              RaisedButton(
-                  color: Theme.of(context).colorScheme.tertiary,
+              TextButton(
+                  // color: Theme.of(context).colorScheme.tertiary,
                   child: Text('Log In'),
                   onPressed: () async {
                     setState(() {
@@ -83,7 +85,7 @@ class _LoginState extends State<Login> {
                       final user = await _auth.signInWithEmailAndPassword(
                           email: email, password: password);
                       if (user != null) {
-                        Navigator.pushNamed(context, 'home');
+                        Get.to(() => HomePage());
                       }
                     } catch (e) {
                       print(e);

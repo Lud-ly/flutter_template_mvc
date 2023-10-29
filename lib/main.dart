@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:whowhats/auth/register.dart';
-import 'screen/welcome.dart';
-import 'screen/home.dart';
+import 'package:whowhats/screens/welcome.dart';
 import 'auth/login.dart';
 
 void main() async {
@@ -46,7 +44,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       initialRoute: 'welcome',
-      home: Home(),
+      home: Welcome(),
     );
   }
 }
