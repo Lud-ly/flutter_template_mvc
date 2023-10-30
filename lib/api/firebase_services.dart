@@ -37,8 +37,8 @@ class FirebaseServices {
     }
   }
 
-  static Future<String?> registerWithMail(
-      String mail, String mdp, BuildContext context) async {
+  static Future<String?> registerWithMail(String mail, String mdp,
+      String firstname, String lastname, BuildContext context) async {
     try {
       User? user = (await _auth.createUserWithEmailAndPassword(
               email: mail, password: mdp))
@@ -47,10 +47,10 @@ class FirebaseServices {
       if (user != null) {
         await FirebaseChatCore.instance.createUserInFirestore(
           types.User(
-            firstName: "un prénom",
+            firstName: firstname,
             id: user.uid,
             imageUrl: 'https://i.pravatar.cc/300?u=$mail',
-            lastName: "un nom",
+            lastName: lastname,
           ),
         );
         return user.uid;

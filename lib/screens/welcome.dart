@@ -2,8 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:whowhats/auth/login.dart';
 import 'package:get/get.dart';
-import 'package:whowhats/auth/registration.dart';
 import 'package:whowhats/reusable/lib_images.dart';
+
+import '../auth/register.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -20,17 +21,17 @@ class _WelcomeState extends State<Welcome> {
         decoration: BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
-            image: LOGO,
+            image: BACKGROUND,
             fit: BoxFit.cover,
           ),
         ),
         child: Center(
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton.icon(
                 onPressed: () {
-                  Get.to(() => Registration());
+                  Get.to(() => RegisterPage());
                 },
                 icon: Image(
                     image:

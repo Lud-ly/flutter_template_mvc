@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
-import 'package:whowhats/auth/registration.dart';
+import 'package:whowhats/auth/register.dart';
 import 'package:whowhats/screens/home.dart';
-import 'package:whowhats/utils/custom_textstyles.dart';
 
 import '../reusable/shortcuts.dart';
 
@@ -133,7 +132,7 @@ class _LoginState extends State<Login> {
                     foregroundColor: CodeShortcuts.getColor(Colors.black),
                   ),
                   onPressed: () {
-                    Get.to(() => Registration());
+                    Get.to(() => RegisterPage());
                   },
                 ),
               ),
