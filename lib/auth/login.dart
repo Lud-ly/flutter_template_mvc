@@ -55,14 +55,14 @@ class _LoginState extends State<Login> {
                 style: GoogleFonts.permanentMarker(fontSize: 40),
               )),
               const Image(
-                image: AssetImage("assets/images/undraw_breakfast_psiw.png"),
+                image: AssetImage("assets/images/mandalas.jpg"),
               ),
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "WW",
+                    "M",
                     style: GoogleFonts.permanentMarker(
                       color: Colors.white,
                       fontSize: 35,

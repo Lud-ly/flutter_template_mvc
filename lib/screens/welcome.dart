@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:whowhats/auth/login.dart';
-import 'package:get/get.dart';
-import 'package:whowhats/reusable/lib_images.dart';
+import 'dart:async';
 
-import '../auth/register.dart';
+import '../reusable/lib_images.dart';
+import '../reusable/rounded_buttons.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -14,56 +12,72 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+  double _top = 0; // Position verticale initiale
+  double _left = 0; // Position horizontale initiale
+  double _directionX = 1; // Direction horizontale (1 ou -1)
+  double _directionY = 1; // Direction verticale (1 ou -1)
+  bool _stopMoving = false; // Variable pour contrôler l'arrêt du mouvement
+  late Timer _timer; // Timer initialisé ultérieurement
+
+  @override
+  void initState() {
+    super.initState();
+    startMoving();
+  }
+
+  void startMoving() {
+    const moveInterval =
+        Duration(milliseconds: 1000); // Intervalle de déplacement
+    _timer = Timer.periodic(moveInterval, (timer) {
+      setState(() {
+        if (!_stopMoving) {
+          _top += 10 * _directionY;
+          _left += 10 * _directionX;
+
+          if (_top <= 0 || _top >= (MediaQuery.of(context).size.height - 50)) {
+            _directionY *= -1;
+          }
+          if (_left <= 0 || _left >= (MediaQuery.of(context).size.width - 50)) {
+            _directionX *= -1;
+          }
+        }
+      });
+    });
+
+    // Arrêter le mouvement après 10 secondes et recentrer le bouton
+    Future.delayed(Duration(seconds: 5), () {
+      setState(() {
+        _stopMoving = true; // Met fin au mouvement
+        _top = (MediaQuery.of(context).size.height - 50) / 2;
+        _left = (MediaQuery.of(context).size.width - 50) / 2;
+        _timer.cancel(); // Arrête le timer de mouvement
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          image: DecorationImage(
-            image: BACKGROUND,
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  Get.to(() => RegisterPage());
-                },
-                icon: Image(
-                    image:
-                        AssetImage("assets/images/undraw_handcrafts_user.png"),
-                    width: 60,
-                    alignment: Alignment.center),
-                //icon data for elevated button
-                label: Text("S'inscrire"), //label text
-                style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.tertiary,
-                    elevation: 2 //elevated btton background color
-                    ),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              image: DecorationImage(
+                image: BACKGROUND,
+                fit: BoxFit.cover,
               ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Get.to(() => Login());
-                },
-                label: Text("Se connecter"), //label text
-                icon: Image(
-                    image: AssetImage(
-                        "assets/images/undraw_handcrafts_curved_arrow.png"),
-                    width: 50,
-                    alignment:
-                        Alignment.center), //icon data for elevated button
-                style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.tertiary,
-                    elevation: 2 //elevated btton background color
-                    ),
-              ),
-            ],
+            ),
           ),
-        ),
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
+            top: _top,
+            left: _left,
+            child: GoButton3D(), // Votre bouton "Go" ici
+          ),
+        ],
       ),
     );
   }
