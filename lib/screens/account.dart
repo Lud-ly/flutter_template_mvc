@@ -13,6 +13,7 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   final _auth = FirebaseAuth.instance;
   late ScrollController _scrollController;
+  String imageUrl = "assets/images/user.png";
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _AccountPageState extends State<AccountPage> {
         child: Text("Account page"),
       ),
       scrollController: _scrollController,
+      imageUrl: imageUrl,
     );
   }
 }

@@ -13,7 +13,7 @@ class AlarmPage extends StatefulWidget {
 class _AlarmPageState extends State<AlarmPage> {
   final _auth = FirebaseAuth.instance;
   late ScrollController _scrollController;
-
+  String imageUrl = "assets/images/user.png";
   @override
   void initState() {
     super.initState();
@@ -47,6 +47,7 @@ class _AlarmPageState extends State<AlarmPage> {
         child: Text("Alarm page"),
       ),
       scrollController: _scrollController,
+      imageUrl: imageUrl,
     );
   }
 }

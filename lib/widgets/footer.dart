@@ -120,7 +120,7 @@ class _BubbleButton extends StatelessWidget {
           Flexible(
             child: IconButton(
               onPressed: () => _goTo(_page),
-              color: Color.fromARGB(255, 6, 20, 131),
+              color: Colors.black,
               icon: _icon,
               iconSize: kIsWeb ? 35 : SCREEN_HEIGHT(context) * 0.06,
             ),

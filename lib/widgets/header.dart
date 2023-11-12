@@ -8,7 +8,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
   String picturePath = 'assets/images/user.jpg';
-  Color customcolor = Color.fromARGB(255, 6, 20, 131);
+  Color customcolor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "WW",
+            "M",
             style: GoogleFonts.permanentMarker(
               color: Colors.black,
               letterSpacing: 4,
