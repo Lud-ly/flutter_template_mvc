@@ -7,7 +7,8 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:whowhats/api/firebase_services.dart';
 import 'package:whowhats/auth/login.dart';
 import 'package:whowhats/screens/home.dart';
-import 'package:whowhats/utils/custom_textstyles.dart';
+
+import '../reusable/shortcuts.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -73,155 +74,246 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: ModalProgressHUD(
+          color: Colors.black,
+          progressIndicator: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+                Colors.deepOrangeAccent), // Color of the loader
+          ),
           inAsyncCall: showSpinner,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Center(
-                      child: Text(
-                    "S'inscrire",
-                    style: GoogleFonts.permanentMarker(
-                        fontSize: 40, color: Colors.black),
-                  )),
-                  const Image(
-                    image:
-                        AssetImage("assets/images/undraw_breakfast_psiw.png"),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "WW",
-                        style: GoogleFonts.permanentMarker(
-                          color: Colors.white,
-                          fontSize: 35,
-                          shadows: <Shadow>[
-                            const Shadow(
-                              offset: Offset(2.0, 2.0),
-                              blurRadius: 1.0,
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ],
-                        ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                SizedBox(
+                  height: 60,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ClipOval(
+                      child: Image(
+                        image: AssetImage("assets/images/me.png"),
+                        width: 40,
+                        height: 40,
                       ),
                     ),
-                  ),
-                  TextFormField(
-                    controller: _lastnameController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      labelText: 'Nom',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.cancel),
-                        onPressed: () => _lastnameController.clear(),
-                      ),
-                    ),
-                    keyboardType: TextInputType.name,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Veuillez entrer votre nom';
-                      } else if (value.length < 3) {
-                        return 'Le nom est trop court';
-                      }
-                      return null;
-                    },
-                    onEditingComplete: () {
-                      if (_formKey.currentState!.validate()) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                  ),
-                  TextFormField(
-                    controller: _firstnameController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      labelText: 'Prénom',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.cancel),
-                        onPressed: () => _firstnameController.clear(),
-                      ),
-                    ),
-                    keyboardType: TextInputType.name,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Veuillez entrer votre nom';
-                      } else if (value.length < 3) {
-                        return 'Le nom est trop court';
-                      }
-                      return null;
-                    },
-                    onEditingComplete: () {
-                      if (_formKey.currentState!.validate()) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                  ),
-                  TextField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      labelText: 'Email',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.cancel),
-                        onPressed: () => _usernameController.clear(),
-                      ),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    onEditingComplete: () => FocusScope.of(context).nextFocus(),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      labelText: 'Password',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.cancel),
-                        onPressed: () => _passwordController.clear(),
-                      ),
-                    ),
-                    obscureText: true,
-                    onEditingComplete: _register,
-                  ),
-                  TextButton(
-                    onPressed: _registering ? null : _register,
-                    child: Text(
-                      'Crée mon compte',
-                      style: CustomTextStyle.small(fontColor: Colors.black),
-                    ),
-                  ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: secondary,
-                        padding: const EdgeInsets.all(2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      child: Text('Déja un compte ? Se connecter',
-                          style: TextStyle(
-                            color: primary,
-                            fontFamily: 'fantasy',
-                          )),
+                    TextButton(
                       onPressed: () {
                         Get.to(() => Login());
-                      }),
-                ],
-              ),
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Se connecter',
+                            style: TextStyle(
+                              fontFamily: 'PermanentMarker',
+                              fontSize: 10,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(width: 8.0),
+                          Icon(
+                            Icons.login_outlined,
+                            color: Colors.black,
+                            size: 18.0,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Center(
+                    child: Text(
+                  "Inscription",
+                  style: TextStyle(
+                      fontFamily: 'PermanentMarker',
+                      fontSize: 40,
+                      color: Colors.black),
+                )),
+                SizedBox(
+                  height: 50,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _lastnameController,
+                        decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            labelText: 'Nom',
+                            labelStyle: TextStyle(color: Colors.black),
+                            suffixIcon: IconButton(
+                              color: Colors.black,
+                              icon: const Icon(Icons.cancel),
+                              onPressed: () => _lastnameController.clear(),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 4.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            )),
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Veuillez entrer votre nom';
+                          } else if (value.length < 3) {
+                            return 'Le nom est trop court';
+                          }
+                          return null;
+                        },
+                        onEditingComplete: () {
+                          if (_formKey.currentState!.validate()) {
+                            FocusScope.of(context).nextFocus();
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      TextFormField(
+                        controller: _firstnameController,
+                        decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            labelText: 'Prénom',
+                            labelStyle: TextStyle(color: Colors.black),
+                            suffixIcon: IconButton(
+                              color: Colors.black,
+                              icon: const Icon(Icons.cancel),
+                              onPressed: () => _firstnameController.clear(),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 4.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            )),
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Veuillez entrer votre nom';
+                          } else if (value.length < 3) {
+                            return 'Le nom est trop court';
+                          }
+                          return null;
+                        },
+                        onEditingComplete: () {
+                          if (_formKey.currentState!.validate()) {
+                            FocusScope.of(context).nextFocus();
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      TextField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            labelText: 'Email',
+                            labelStyle: TextStyle(color: Colors.black),
+                            suffixIcon: IconButton(
+                              color: Colors.black,
+                              icon: const Icon(Icons.cancel),
+                              onPressed: () => _usernameController.clear(),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 4.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            )),
+                        keyboardType: TextInputType.emailAddress,
+                        onEditingComplete: () =>
+                            FocusScope.of(context).nextFocus(),
+                      ),
+                      const SizedBox(height: 15),
+                      TextField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            labelText: 'Password',
+                            labelStyle: TextStyle(color: Colors.black),
+                            suffixIcon: IconButton(
+                              color: Colors.black,
+                              icon: const Icon(Icons.cancel),
+                              onPressed: () => _passwordController.clear(),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 4.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            )),
+                        obscureText: true,
+                        onEditingComplete: _register,
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      TextButton(
+                        onPressed: _registering ? null : _register,
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black),
+                          foregroundColor: CodeShortcuts.getColor(Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  10.0), // Ajustez le rayon selon vos besoins
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          'Crée mon compte',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),

@@ -64,7 +64,7 @@ class _GoButton3DState extends State<GoButton3D> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color.fromARGB(208, 255, 172, 64),
+                    Color.fromARGB(208, 255, 255, 255),
                     Color.fromARGB(189, 255, 255, 255)
                   ],
                 )
@@ -73,13 +73,13 @@ class _GoButton3DState extends State<GoButton3D> {
                   end: Alignment.bottomRight,
                   colors: [
                     Color.fromARGB(193, 255, 255, 255),
-                    Color.fromARGB(211, 255, 109, 64)
+                    Color.fromARGB(208, 255, 255, 255),
                   ],
                 ),
           boxShadow: isTapped
               ? [
                   BoxShadow(
-                    color: Colors.orangeAccent.withOpacity(0.6),
+                    color: Colors.white.withOpacity(0.9),
                     blurRadius: 10,
                     offset: Offset(5, 5),
                   ),
@@ -91,7 +91,7 @@ class _GoButton3DState extends State<GoButton3D> {
                 ]
               : [
                   BoxShadow(
-                    color: Colors.deepOrangeAccent.withOpacity(0.6),
+                    color: Colors.black.withOpacity(0.6),
                     blurRadius: 10,
                     offset: Offset(5, 5),
                   ),
@@ -99,24 +99,12 @@ class _GoButton3DState extends State<GoButton3D> {
         ),
         child: Center(
           child: TextButton(
-            onPressed: () => Get.to(() => Login()),
-            child: Text(
-              "GO",
-              style: TextStyle(
-                fontSize: 26,
-                color: Colors.white, // Couleur du texte
-                shadows: [
-                  Shadow(
-                    blurRadius: 4, // Rayon du flou de l'ombre
-                    color: Colors
-                        .black, // Couleur de l'ombre (dans cet exemple, noir)
-                    offset: Offset(
-                        1, 1), // Décalage de l'ombre par rapport au texte
-                  ),
-                ],
-              ),
-            ),
-          ),
+              onPressed: () => Get.to(() => Login()),
+              child: Icon(
+                Icons.add_to_home_screen_rounded,
+                color: Colors.black,
+                size: 60,
+              )),
         ),
       ),
     );

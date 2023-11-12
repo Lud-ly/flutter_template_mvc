@@ -27,7 +27,7 @@ class _WelcomeState extends State<Welcome> {
 
   void startMoving() {
     const moveInterval =
-        Duration(milliseconds: 1000); // Intervalle de déplacement
+        Duration(milliseconds: 16); // Intervalle de déplacement
     _timer = Timer.periodic(moveInterval, (timer) {
       setState(() {
         if (!_stopMoving) {
@@ -49,7 +49,7 @@ class _WelcomeState extends State<Welcome> {
       setState(() {
         _stopMoving = true; // Met fin au mouvement
         _top = (MediaQuery.of(context).size.height - 50) / 2;
-        _left = (MediaQuery.of(context).size.width - 50) / 2;
+        _left = (MediaQuery.of(context).size.width - 120) / 2;
         _timer.cancel(); // Arrête le timer de mouvement
       });
     });
@@ -75,7 +75,7 @@ class _WelcomeState extends State<Welcome> {
             curve: Curves.easeInOut,
             top: _top,
             left: _left,
-            child: GoButton3D(), // Votre bouton "Go" ici
+            child: GoButton3D(),
           ),
         ],
       ),
