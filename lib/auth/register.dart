@@ -1,12 +1,12 @@
-import 'package:faker/faker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:whowhats/api/firebase_services.dart';
 import 'package:whowhats/auth/login.dart';
 import 'package:whowhats/screens/home.dart';
+import 'package:whowhats/utils/tools_lib.dart';
 
 import '../reusable/shortcuts.dart';
 
@@ -25,11 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _lastnameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  late String errorMessage = '';
 
   @override
   void dispose() {
@@ -44,44 +40,158 @@ class _RegisterPageState extends State<RegisterPage> {
     FocusScope.of(context).unfocus();
 
     setState(() {
+      showSpinner = true;
+      errorMessage = '';
       _registering = true;
     });
 
-    String _email = _usernameController.text;
-    String _password = _passwordController.text;
-    String _firstName = _firstnameController.text;
-    String _lastName = _lastnameController.text;
+    if (_formKey.currentState!.validate()) {
+      String _email = _usernameController.text;
+      String _password = _passwordController.text;
+      String _firstName = _firstnameController.text;
+      String _lastName = _lastnameController.text;
 
-    FirebaseServices.registerWithMail(
-            _email, _password, _firstName, _lastName, context)
-        .then((userId) {
-      if (userId != null) {
-        Get.to(() => HomePage());
-      } else {
+      FirebaseServices.registerWithMail(
+              _email, _password, _firstName, _lastName, context)
+          .then((userId) {
+        if (userId != null) {
+          Get.to(() => HomePage());
+        } else {
+          setState(() {
+            _registering = false;
+          });
+        }
+      }).catchError((error) {
         setState(() {
           _registering = false;
+          showSpinner = false;
         });
-      }
-    }).catchError((error) {
-      setState(() {
-        _registering = false;
+
+        // Gestion des erreurs
+        if (error is FirebaseAuthException) {
+          _registering = false;
+          showSpinner = false;
+          switch (error.code) {
+            case 'email-already-in-use':
+              errorMessage = 'Cette adresse e-mail est déjà enregistrée.';
+              break;
+            case 'weak-password':
+              errorMessage =
+                  'Le mot de passe est trop faible. Il doit comporter au moins 6 caractères.';
+              break;
+            default:
+              errorMessage = 'Erreur lors de l\'inscription : ${error.message}';
+          }
+        } else {
+          errorMessage = 'Erreur inattendue : ${error.toString()}';
+        }
       });
-    });
+    }
+  }
+
+  String? validateName(String? value, String fieldName) {
+    showSpinner = false;
+    _registering = false;
+    if (value == null || value.isEmpty) {
+      return 'Veuillez entrer votre $fieldName.';
+    } else if (value.length < 3) {
+      return 'Le $fieldName est trop court.';
+    }
+    return null;
+  }
+
+  String? validateEmail(String? value) {
+    showSpinner = false;
+    _registering = false;
+    if (value == null || value.isEmpty) {
+      return 'Veuillez entrer votre adresse e-mail.';
+    } else if (!isValidEmail(value)) {
+      return 'Veuillez entrer une adresse e-mail valide.';
+    }
+    return null;
+  }
+
+  String? validatePassword(String? value) {
+    showSpinner = false;
+    _registering = false;
+    if (value == null || value.isEmpty) {
+      return 'Veuillez entrer votre mot de passe.';
+    } else if (value.length < 6) {
+      return 'Le mot de passe est trop court. Il doit comporter au moins 6 caractères.';
+    } else if (!isValidPassword(value)) {
+      return 'Le mot de passe est trop faible.';
+    }
+    return null;
+  }
+
+  Widget buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    TextInputType? keyboardType,
+    bool obscureText = false,
+    required String? Function(String?) validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 3,
+            color: Colors.deepOrangeAccent,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        ),
+        errorStyle: TextStyle(
+          color: Colors.grey,
+        ),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        labelText: labelText,
+        labelStyle: TextStyle(color: Colors.black),
+        suffixIcon: IconButton(
+          color: Colors.black,
+          icon: const Icon(Icons.cancel),
+          onPressed: () => controller.clear(),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2.0),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 4.0),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        ),
+      ),
+      keyboardType: keyboardType,
+      obscureText: obscureText,
+      validator: validator,
+      onEditingComplete: () {
+        if (_formKey.currentState!.validate()) {
+          FocusScope.of(context).nextFocus();
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: ModalProgressHUD(
-          color: Colors.black,
-          progressIndicator: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.deepOrangeAccent), // Color of the loader
-          ),
-          inAsyncCall: showSpinner,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
+      body: ModalProgressHUD(
+        color: Colors.black,
+        progressIndicator: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrangeAccent),
+        ),
+        inAsyncCall: showSpinner,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -141,153 +251,43 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: ListView(
+                    shrinkWrap: true,
                     children: <Widget>[
-                      TextFormField(
+                      buildTextField(
                         controller: _lastnameController,
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            ),
-                            labelText: 'Nom',
-                            labelStyle: TextStyle(color: Colors.black),
-                            suffixIcon: IconButton(
-                              color: Colors.black,
-                              icon: const Icon(Icons.cancel),
-                              onPressed: () => _lastnameController.clear(),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 2.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 4.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            )),
+                        labelText: 'Nom',
                         keyboardType: TextInputType.name,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Veuillez entrer votre nom';
-                          } else if (value.length < 3) {
-                            return 'Le nom est trop court';
-                          }
-                          return null;
-                        },
-                        onEditingComplete: () {
-                          if (_formKey.currentState!.validate()) {
-                            FocusScope.of(context).nextFocus();
-                          }
+                          return validateName(value, 'Nom');
                         },
                       ),
                       const SizedBox(height: 15),
-                      TextFormField(
+                      buildTextField(
                         controller: _firstnameController,
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            ),
-                            labelText: 'Prénom',
-                            labelStyle: TextStyle(color: Colors.black),
-                            suffixIcon: IconButton(
-                              color: Colors.black,
-                              icon: const Icon(Icons.cancel),
-                              onPressed: () => _firstnameController.clear(),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 2.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 4.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            )),
+                        labelText: 'Prénom',
                         keyboardType: TextInputType.name,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Veuillez entrer votre nom';
-                          } else if (value.length < 3) {
-                            return 'Le nom est trop court';
-                          }
-                          return null;
-                        },
-                        onEditingComplete: () {
-                          if (_formKey.currentState!.validate()) {
-                            FocusScope.of(context).nextFocus();
-                          }
+                          return validateName(value, 'Prénom');
                         },
                       ),
                       const SizedBox(height: 15),
-                      TextField(
+                      buildTextField(
                         controller: _usernameController,
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            ),
-                            labelText: 'Email',
-                            labelStyle: TextStyle(color: Colors.black),
-                            suffixIcon: IconButton(
-                              color: Colors.black,
-                              icon: const Icon(Icons.cancel),
-                              onPressed: () => _usernameController.clear(),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 2.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 4.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            )),
+                        labelText: 'Email',
                         keyboardType: TextInputType.emailAddress,
-                        onEditingComplete: () =>
-                            FocusScope.of(context).nextFocus(),
+                        validator: (value) {
+                          return validateEmail(value);
+                        },
                       ),
                       const SizedBox(height: 15),
-                      TextField(
+                      buildTextField(
                         controller: _passwordController,
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            ),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(color: Colors.black),
-                            suffixIcon: IconButton(
-                              color: Colors.black,
-                              icon: const Icon(Icons.cancel),
-                              onPressed: () => _passwordController.clear(),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 2.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 4.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            )),
+                        labelText: 'Password',
                         obscureText: true,
-                        onEditingComplete: _register,
+                        validator: (value) {
+                          return validatePassword(value);
+                        },
                       ),
                       SizedBox(
                         height: 50,
@@ -301,23 +301,39 @@ class _RegisterPageState extends State<RegisterPage> {
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10.0), // Ajustez le rayon selon vos besoins
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
                         ),
                         child: Text(
-                          'Crée mon compte',
+                          'Créer mon compte',
                         ),
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                     ],
                   ),
-                ),
+                )
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  bool isValidEmail(String email) {
+    RegExp emailRegex =
+        RegExp(r"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$");
+    return emailRegex.hasMatch(email);
+  }
+
+  bool isValidPassword(String password) {
+// si le mot de passe a au moins une lettre majuscule, une lettre minuscule et un chiffre
+    return password.length >= 6 &&
+        password.contains(RegExp(r'[a-z]')) &&
+        password.contains(RegExp(r'[A-Z]')) &&
+        password.contains(RegExp(r'[0-9]'));
   }
 }
