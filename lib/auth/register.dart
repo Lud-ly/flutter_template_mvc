@@ -26,6 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String errorMessage = '';
+  bool _passwordVisible = false;
 
   @override
   void dispose() {
@@ -40,9 +41,9 @@ class _RegisterPageState extends State<RegisterPage> {
     FocusScope.of(context).unfocus();
 
     setState(() {
+      _registering = true;
       showSpinner = true;
       errorMessage = '';
-      _registering = true;
     });
 
     if (_formKey.currentState!.validate()) {
@@ -54,6 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
       FirebaseServices.registerWithMail(
               _email, _password, _firstName, _lastName, context)
           .then((userId) {
+        _registering = true;
         if (userId != null) {
           Get.to(() => HomePage());
         } else {
@@ -91,12 +93,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   String? validateName(String? value, String fieldName) {
     showSpinner = false;
-    _registering = false;
     if (value == null || value.isEmpty) {
       return 'Veuillez entrer votre $fieldName.';
     } else if (value.length < 3) {
       return 'Le $fieldName est trop court.';
     }
+    _registering = false;
     return null;
   }
 
@@ -104,9 +106,9 @@ class _RegisterPageState extends State<RegisterPage> {
     showSpinner = false;
     _registering = false;
     if (value == null || value.isEmpty) {
-      return 'Veuillez entrer votre adresse e-mail.';
+      return 'Veuillez entrer votre @dresse e-mail.';
     } else if (!isValidEmail(value)) {
-      return 'Veuillez entrer une adresse e-mail valide.';
+      return 'Veuillez entrer une adresse e-mail v@lide.';
     }
     return null;
   }
@@ -117,9 +119,9 @@ class _RegisterPageState extends State<RegisterPage> {
     if (value == null || value.isEmpty) {
       return 'Veuillez entrer votre mot de passe.';
     } else if (value.length < 6) {
-      return 'Le mot de passe est trop court. Il doit comporter au moins 6 caractères.';
+      return 'Il doit comporter au moins 6 caractères';
     } else if (!isValidPassword(value)) {
-      return 'Le mot de passe est trop faible.';
+      return 'trop faible, au moins une majuscule et un chiffre.';
     }
     return null;
   }
@@ -148,7 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.all(Radius.circular(12.0)),
         ),
         errorStyle: TextStyle(
-          color: Colors.grey,
+          color: Colors.deepOrangeAccent,
         ),
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -192,130 +194,181 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                SizedBox(
-                  height: 60,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ClipOval(
-                      child: Image(
-                        image: AssetImage("assets/images/me.png"),
-                        width: 40,
-                        height: 40,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Get.to(() => Login());
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Se connecter',
-                            style: TextStyle(
-                              fontFamily: 'PermanentMarker',
-                              fontSize: 10,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(width: 8.0),
-                          Icon(
-                            Icons.login_outlined,
-                            color: Colors.black,
-                            size: 18.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Center(
-                    child: Text(
-                  "Inscription",
-                  style: TextStyle(
-                      fontFamily: 'PermanentMarker',
-                      fontSize: 40,
-                      color: Colors.black),
-                )),
-                SizedBox(
-                  height: 50,
-                ),
-                Form(
-                  key: _formKey,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      buildTextField(
-                        controller: _lastnameController,
-                        labelText: 'Nom',
-                        keyboardType: TextInputType.name,
-                        validator: (value) {
-                          return validateName(value, 'Nom');
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      buildTextField(
-                        controller: _firstnameController,
-                        labelText: 'Prénom',
-                        keyboardType: TextInputType.name,
-                        validator: (value) {
-                          return validateName(value, 'Prénom');
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      buildTextField(
-                        controller: _usernameController,
-                        labelText: 'Email',
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          return validateEmail(value);
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      buildTextField(
-                        controller: _passwordController,
-                        labelText: 'Password',
-                        obscureText: true,
-                        validator: (value) {
-                          return validatePassword(value);
-                        },
-                      ),
-                      SizedBox(
-                        height: 50,
+            child: GestureDetector(
+              onTap: () {
+                // Cacher le clavier lorsque l'utilisateur clique à l'extérieur du champ de texte.
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ClipOval(
+                        child: Image(
+                          image: AssetImage("assets/images/me.png"),
+                          width: 40,
+                          height: 40,
+                        ),
                       ),
                       TextButton(
-                        onPressed: _registering ? null : _register,
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.black),
-                          foregroundColor: CodeShortcuts.getColor(Colors.white),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                        onPressed: () {
+                          Get.to(() => Login());
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Se connecter',
+                              style: TextStyle(
+                                fontFamily: 'PermanentMarker',
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
+                            SizedBox(width: 8.0),
+                            Icon(
+                              Icons.login_outlined,
+                              color: Colors.black,
+                              size: 18.0,
+                            ),
+                          ],
                         ),
-                        child: Text(
-                          'Créer mon compte',
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
                       ),
                     ],
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Center(
+                      child: Text(
+                    "Inscription",
+                    style: TextStyle(
+                        fontFamily: 'PermanentMarker',
+                        fontSize: 40,
+                        color: Colors.black),
+                  )),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        buildTextField(
+                          controller: _lastnameController,
+                          labelText: 'Nom',
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            return validateName(value, 'Nom');
+                          },
+                        ),
+                        const SizedBox(height: 15),
+                        buildTextField(
+                          controller: _firstnameController,
+                          labelText: 'Prénom',
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            return validateName(value, 'Prénom');
+                          },
+                        ),
+                        const SizedBox(height: 15),
+                        buildTextField(
+                          controller: _usernameController,
+                          labelText: 'Email',
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            return validateEmail(value);
+                          },
+                        ),
+                        const SizedBox(height: 15),
+                        // TextFormField(
+                        //   obscureText: !_passwordVisible,
+                        //   validator: (value) {
+                        //     return validatePassword(value);
+                        //   },
+                        //   decoration: InputDecoration(
+                        //     hintText: "passwordExemple82",
+                        //     labelText: "password",
+                        //     border: const OutlineInputBorder(
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(8)),
+                        //     ),
+                        //     labelStyle: TextStyle(color: Colors.black),
+                        //     suffixIcon: IconButton(
+                        //       icon: Icon(
+                        //         _passwordVisible
+                        //             ? Icons.visibility
+                        //             : Icons.visibility_off,
+                        //         color: Colors.black,
+                        //       ),
+                        //       onPressed: () {
+                        //         setState(() {
+                        //           _passwordVisible = !_passwordVisible;
+                        //         });
+                        //       },
+                        //     ),
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderSide:
+                        //           BorderSide(color: Colors.black, width: 2.0),
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(12.0)),
+                        //     ),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderSide:
+                        //           BorderSide(color: Colors.black, width: 4.0),
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(12.0)),
+                        //     ),
+                        //   ),
+                        // ),
+                        buildTextField(
+                          controller: _passwordController,
+                          labelText: 'Password',
+                          obscureText: true,
+                          validator: (value) {
+                            return validatePassword(value);
+                          },
+                        ),
+                        SizedBox(
+                          height: 52,
+                        ),
+                        TextButton(
+                          onPressed: _registering ? null : _register,
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.black),
+                            foregroundColor:
+                                CodeShortcuts.getColor(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                          child: _registering
+                              ? CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.deepOrangeAccent),
+                                )
+                              : Text(
+                                  'Créer mon compte',
+                                ),
+                        ),
+
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

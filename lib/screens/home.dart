@@ -46,13 +46,12 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: FutureBuilder<DocumentSnapshot>(
           future: FirebaseFirestore.instance
-              .collection(
-                  'users') // Remplacez par le nom de votre collection d'utilisateurs
+              .collection('users')
               .doc(loggedinUser.uid)
               .get(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator(); // Vous pouvez également afficher un indicateur de chargement ici
+              return CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Erreur de chargement des données de l\'utilisateur');
             } else if (!snapshot.hasData || !snapshot.data!.exists) {
