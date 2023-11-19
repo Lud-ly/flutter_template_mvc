@@ -11,32 +11,24 @@ import '../widgets/footer.dart';
 class CustomScaffold extends StatelessWidget {
   final Widget body;
   final ScrollController? scrollController;
-  final String imageUrl;
+
   final _auth = FirebaseAuth.instance;
-  CustomScaffold(
-      {required this.body,
-      required this.scrollController,
-      required this.imageUrl,
-      Key? key})
+  CustomScaffold({required this.body, required this.scrollController, Key? key})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Header(),
-
-      body: Center(
-        child:
-            // Container(
-            //   height: SCREEN_HEIGHT(context),
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image: BACKGROUND,
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            //   child:
-            Column(
+      body: Container(
+        height: SCREEN_HEIGHT(context),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: HOMEBACKGROUND,
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
           children: [
+            Header(),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(0),

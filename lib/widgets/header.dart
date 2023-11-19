@@ -1,47 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-import '../reusable/lib_images.dart';
-import '../utils/tools_lib.dart';
-
-class Header extends StatelessWidget implements PreferredSizeWidget {
+class Header extends StatefulWidget {
   @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  final _auth = FirebaseAuth.instance;
+
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-  String picturePath = 'assets/images/user.jpg';
-  Color customcolor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
+    User? loggedinUser = FirebaseAuth.instance.currentUser;
+
     return AppBar(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "M",
-            style: GoogleFonts.permanentMarker(
-              color: Colors.black,
-              letterSpacing: 4,
-              fontSize: 30, // Adjust the font size as needed
-              shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(2.0, 2.0),
-                  blurRadius: 1.0,
-                  color: customcolor,
+      title: FutureBuilder<DocumentSnapshot>(
+        future: FirebaseFirestore.instance
+            .collection('users')
+            .doc(loggedinUser!.uid)
+            .get(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Erreur de chargement des données de l\'utilisateur');
+          } else if (!snapshot.hasData || !snapshot.data!.exists) {
+            return Text('Aucune donnée utilisateur trouvée');
+          } else {
+            Map<String, dynamic> userData =
+                snapshot.data!.data() as Map<String, dynamic>;
+            String firstName = userData['firstName'];
+            String lastName = userData['lastName'];
+            String imageUrl = userData['imageUrl'];
+
+            print('User Data: $firstName $lastName $imageUrl');
+
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  '$firstName $lastName',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'PermanentMarker',
+                      color: Colors.black),
+                ),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: NetworkImage(imageUrl),
                 ),
               ],
-            ),
-          ),
-          CircleAvatar(
-              radius: 25,
-              backgroundColor: customcolor,
-              child: CircleAvatar(
-                  radius: 20, backgroundImage: AssetImage(picturePath)))
-        ],
+            );
+          }
+        },
       ),
       backgroundColor: Colors.white, // Change the color as needed
       automaticallyImplyLeading: false, // Set to true if you want a back button
-      elevation: 0, // Change the elevation as needed
+      elevation: 0, // C
     );
   }
 }

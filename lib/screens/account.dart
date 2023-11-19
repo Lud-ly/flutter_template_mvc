@@ -48,7 +48,6 @@ class _AccountPageState extends State<AccountPage> {
         child: Text("Account page"),
       ),
       scrollController: _scrollController,
-      imageUrl: imageUrl,
     );
   }
 }

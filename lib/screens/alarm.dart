@@ -47,7 +47,6 @@ class _AlarmPageState extends State<AlarmPage> {
         child: Text("Alarm page"),
       ),
       scrollController: _scrollController,
-      imageUrl: imageUrl,
     );
   }
 }

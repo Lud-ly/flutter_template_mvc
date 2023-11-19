@@ -60,13 +60,19 @@ class FooterState extends State<Footer> {
                   _PageType.alarm,
                   Icon(Icons.alarm),
                   "Alarme",
-                  key: const Key("goToBrowseBtn"),
+                  key: const Key("goToAlarmeBtn"),
                 ),
                 _BubbleButton(
                   _PageType.account,
                   Icon(Icons.account_box),
                   "Account",
-                  key: const Key("goToCommunityBtn"),
+                  key: const Key("goToAccountBtn"),
+                ),
+                _BubbleButton(
+                  _PageType.logout,
+                  Icon(Icons.logout),
+                  "Deconnexion",
+                  key: const Key("goToDeconnexionBtn"),
                 ),
               ],
             ),
@@ -144,12 +150,14 @@ class _BubbleButton extends StatelessWidget {
         Get.to(() => AlarmPage());
         break;
       case _PageType.account:
+        Get.to(() => AccountPage());
+        break;
+      case _PageType.logout:
         FirebaseServices.disconnect();
         Get.to(() => Welcome());
-
         break;
     }
   }
 }
 
-enum _PageType { home, alarm, account }
+enum _PageType { home, alarm, account, logout }
