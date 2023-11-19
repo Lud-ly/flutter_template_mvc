@@ -99,7 +99,7 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 30,
+                      height: 23,
                     ),
                     TextField(
                       keyboardType: TextInputType.emailAddress,
