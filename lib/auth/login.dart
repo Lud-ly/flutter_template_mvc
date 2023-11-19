@@ -4,6 +4,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
 import 'package:whowhats/auth/password.dart';
 import 'package:whowhats/auth/register.dart';
+import 'package:whowhats/reusable/bounced_icon.dart';
 import 'package:whowhats/screens/home.dart';
 import 'package:whowhats/utils/tools_lib.dart';
 
@@ -55,29 +56,13 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {
-                        Get.to(() => RegisterPage());
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'S\'inscrire',
-                            style: TextStyle(
-                              fontFamily: 'PermanentMarker',
-                              fontSize: 10,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(width: 8.0),
-                          Icon(
-                            Icons.edit,
-                            color: Colors.black,
-                            size: 18.0,
-                          ),
-                        ],
-                      ),
-                    ),
+                        onPressed: () {
+                          Get.to(() => RegisterPage());
+                        },
+                        child: BouncingIcon(
+                          iconChoisi: Icons.edit,
+                          textChoisi: 'S\'incrire',
+                        )),
                   ],
                 ),
                 SizedBox(

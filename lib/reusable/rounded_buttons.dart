@@ -77,77 +77,80 @@ class _GoButton3DState extends State<GoButton3D>
         });
       },
       child: Container(
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: isTapped
-                ? LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(208, 255, 255, 255),
-                      Color.fromARGB(189, 255, 255, 255)
-                    ],
-                  )
-                : LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(193, 255, 255, 255),
-                      Color.fromARGB(208, 255, 255, 255),
-                    ],
-                  ),
-            boxShadow: isTapped
-                ? [
-                    BoxShadow(
-                      color: Colors.white.withOpacity(0.9),
-                      blurRadius: 10,
-                      offset: Offset(5, 5),
-                    ),
-                    BoxShadow(
-                      color: Colors.white.withOpacity(0.6),
-                      blurRadius: 10,
-                      offset: Offset(-5, -5),
-                    ),
-                  ]
-                : [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.6),
-                      blurRadius: 10,
-                      offset: Offset(5, 5),
-                    ),
+        width: 120,
+        height: 120,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: isTapped
+              ? LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color.fromARGB(208, 255, 255, 255),
+                    Color.fromARGB(189, 255, 255, 255)
                   ],
-          ),
-          child: Center(
-            child: TextButton(
-              onPressed: () {
-                _startRotationAnimation();
-                Future.delayed(Duration(seconds: 2), () {
-                  Get.to(() => Login());
-                });
-              },
-              child: AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) {
-                  return Transform.rotate(
-                    angle: _controller.value * 2 * 3.1415926535,
-                    child: ClipOval(
-                      child: Image(
-                        image: AssetImage(
-                          isTapped
-                              ? "assets/images/me3.jpg"
-                              : "assets/images/me2.jpg",
-                        ),
-                        width: 100,
-                        height: 100,
+                )
+              : LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color.fromARGB(193, 255, 255, 255),
+                    Color.fromARGB(208, 255, 255, 255),
+                  ],
+                ),
+          boxShadow: isTapped
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.9),
+                    blurRadius: 10,
+                    offset: Offset(5, 5),
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.6),
+                    blurRadius: 10,
+                    offset: Offset(-5, -5),
+                  ),
+                ]
+              : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.6),
+                    blurRadius: 10,
+                    offset: Offset(5, 5),
+                  ),
+                ],
+        ),
+        child: Center(
+          child: TextButton(
+            onPressed: () {
+              isTapped = true;
+              _startRotationAnimation();
+              Future.delayed(Duration(seconds: 2), () {
+                Get.to(() => Login());
+              });
+            },
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Transform.rotate(
+                  angle: _controller.value * 2 * 3.1415926535,
+                  child: ClipOval(
+                    child: Image(
+                      image: AssetImage(
+                        isTapped
+                            ? "assets/images/me3.jpg"
+                            : "assets/images/me2.jpg",
                       ),
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
