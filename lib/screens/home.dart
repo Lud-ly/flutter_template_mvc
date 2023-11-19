@@ -20,6 +20,55 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getCurrentUser();
     _scrollController = ScrollController();
+    Future.delayed(Duration.zero, () => _showExplanationDialog(context));
+  }
+
+  Future<void> _showExplanationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible:
+          true, // Permet de fermer le pop-up en cliquant en dehors
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white
+              .withOpacity(0.9), // Fond blanc légèrement transparent
+          title: Text(
+            'Bienvenue !',
+            style: TextStyle(
+              fontFamily: 'PermanentMarker',
+              color: Colors.black,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Bienvenue dans votre application. Nous vous invitons à changer votre avatar dans la page Mon compte si vous le souhaitez.',
+                  style: TextStyle(
+                    fontFamily: 'PermanentMarker',
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Fermer',
+                style: TextStyle(
+                  fontFamily: 'PermanentMarker',
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

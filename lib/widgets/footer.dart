@@ -109,7 +109,7 @@ class FooterState extends State<Footer> {
   }
 }
 
-class _BubbleButton extends StatelessWidget {
+class _BubbleButton extends StatefulWidget {
   final _PageType _page;
   final String _text;
   final Icon _icon;
@@ -118,24 +118,41 @@ class _BubbleButton extends StatelessWidget {
       : super(key: key);
 
   @override
+  _BubbleButtonState createState() => _BubbleButtonState();
+}
+
+class _BubbleButtonState extends State<_BubbleButton> {
+  bool _isTextVisible = false;
+
+  void _toggleTextVisibility() {
+    setState(() {
+      _isTextVisible = !_isTextVisible;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: SCREEN_WIDTH(context) * 0.2,
+      width: MediaQuery.of(context).size.width * 0.2,
       child: Column(
         children: [
           Flexible(
             child: IconButton(
-              onPressed: () => _goTo(_page),
-              color: Colors.black,
-              icon: _icon,
-              iconSize: kIsWeb ? 35 : SCREEN_HEIGHT(context) * 0.06,
+              onPressed: () {
+                _goTo(widget._page);
+                _toggleTextVisibility();
+              },
+              color: Colors.white,
+              icon: widget._icon,
+              iconSize: kIsWeb ? 35 : MediaQuery.of(context).size.height * 0.06,
             ),
           ),
-          Text(
-            _text,
-            style: CustomTextStyle.small(fontColor: Colors.black),
-            textAlign: TextAlign.center,
-          ),
+          if (_isTextVisible)
+            Text(
+              widget._text,
+              style: CustomTextStyle.small(fontColor: Colors.white),
+              textAlign: TextAlign.center,
+            ),
         ],
       ),
     );

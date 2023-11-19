@@ -60,8 +60,11 @@ class _LoginState extends State<Login> {
                           Get.to(() => RegisterPage());
                         },
                         child: BouncingIcon(
-                          iconChoisi: Icons.edit,
-                          textChoisi: 'S\'incrire',
+                          iconChosen: Icons.edit,
+                          textChosen: 'S\'incrire',
+                          beginPosition: -5,
+                          endPosition: -2,
+                          duration: 2,
                         )),
                   ],
                 ),

@@ -49,7 +49,7 @@ class _GoButton3DState extends State<GoButton3D>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: Duration(milliseconds: 900),
     );
   }
 
@@ -124,7 +124,7 @@ class _GoButton3DState extends State<GoButton3D>
             onPressed: () {
               isTapped = true;
               _startRotationAnimation();
-              Future.delayed(Duration(seconds: 2), () {
+              Future.delayed(Duration(milliseconds: 900), () {
                 Get.to(() => Login());
               });
             },
