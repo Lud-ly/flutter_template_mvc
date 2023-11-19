@@ -1,6 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:whowhats/utils/custom_textstyles.dart';
 
 import '../auth/login.dart';
 
@@ -38,8 +39,29 @@ class GoButton3D extends StatefulWidget {
   _GoButton3DState createState() => _GoButton3DState();
 }
 
-class _GoButton3DState extends State<GoButton3D> {
+class _GoButton3DState extends State<GoButton3D>
+    with SingleTickerProviderStateMixin {
   bool isTapped = false;
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _startRotationAnimation() {
+    _controller.forward(from: 0.0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,58 +77,77 @@ class _GoButton3DState extends State<GoButton3D> {
         });
       },
       child: Container(
-        width: 120,
-        height: 120,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: isTapped
-              ? LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.fromARGB(208, 255, 255, 255),
-                    Color.fromARGB(189, 255, 255, 255)
+          width: 120,
+          height: 120,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: isTapped
+                ? LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(208, 255, 255, 255),
+                      Color.fromARGB(189, 255, 255, 255)
+                    ],
+                  )
+                : LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(193, 255, 255, 255),
+                      Color.fromARGB(208, 255, 255, 255),
+                    ],
+                  ),
+            boxShadow: isTapped
+                ? [
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.9),
+                      blurRadius: 10,
+                      offset: Offset(5, 5),
+                    ),
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.6),
+                      blurRadius: 10,
+                      offset: Offset(-5, -5),
+                    ),
+                  ]
+                : [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.6),
+                      blurRadius: 10,
+                      offset: Offset(5, 5),
+                    ),
                   ],
-                )
-              : LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.fromARGB(193, 255, 255, 255),
-                    Color.fromARGB(208, 255, 255, 255),
-                  ],
-                ),
-          boxShadow: isTapped
-              ? [
-                  BoxShadow(
-                    color: Colors.white.withOpacity(0.9),
-                    blurRadius: 10,
-                    offset: Offset(5, 5),
-                  ),
-                  BoxShadow(
-                    color: Colors.white.withOpacity(0.6),
-                    blurRadius: 10,
-                    offset: Offset(-5, -5),
-                  ),
-                ]
-              : [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.6),
-                    blurRadius: 10,
-                    offset: Offset(5, 5),
-                  ),
-                ],
-        ),
-        child: Center(
-          child: TextButton(
-              onPressed: () => Get.to(() => Login()),
-              child: Icon(
-                Icons.add_to_home_screen_rounded,
-                color: Colors.black,
-                size: 60,
-              )),
-        ),
-      ),
+          ),
+          child: Center(
+            child: TextButton(
+              onPressed: () {
+                _startRotationAnimation();
+                Future.delayed(Duration(seconds: 2), () {
+                  Get.to(() => Login());
+                });
+              },
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Transform.rotate(
+                    angle: _controller.value * 2 * 3.1415926535,
+                    child: ClipOval(
+                      child: Image(
+                        image: AssetImage(
+                          isTapped
+                              ? "assets/images/me3.jpg"
+                              : "assets/images/me2.jpg",
+                        ),
+                        width: 100,
+                        height: 100,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          )),
     );
   }
 }

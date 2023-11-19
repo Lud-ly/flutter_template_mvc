@@ -18,14 +18,30 @@ class _WelcomeState extends State<Welcome> {
   double _directionY = 1; // Direction verticale (1 ou -1)
   bool _stopMoving = false; // Variable pour contrôler l'arrêt du mouvement
   late Timer _timer; // Timer initialisé ultérieurement
+  late double _backgroundOpacity;
+
+  late BoxDecoration _backgroundDecoration;
 
   @override
   void initState() {
     super.initState();
+    _backgroundOpacity = 0.0;
+    _backgroundDecoration = _getDefaultBackgroundDecoration();
+
     startMoving();
   }
 
-  void startMoving() {
+  BoxDecoration _getDefaultBackgroundDecoration() {
+    return BoxDecoration(
+      color: Colors.white,
+      image: DecorationImage(
+        image: BACKGROUND, // Ajoutez votre image ici
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  void startMoving() async {
     const moveInterval =
         Duration(milliseconds: 16); // Intervalle de déplacement
     _timer = Timer.periodic(moveInterval, (timer) {
@@ -44,11 +60,12 @@ class _WelcomeState extends State<Welcome> {
       });
     });
 
-    // Arrêter le mouvement après 10 secondes et recentrer le bouton
-    Future.delayed(Duration(seconds: 5), () {
+    // Arrêter le mouvement après 3 secondes et recentrer le bouton
+    Future.delayed(Duration(seconds: 2), () {
+      _backgroundOpacity = 1.0;
       setState(() {
         _stopMoving = true; // Met fin au mouvement
-        _top = (MediaQuery.of(context).size.height - 50) / 2;
+        _top = (MediaQuery.of(context).size.height - 120) / 2;
         _left = (MediaQuery.of(context).size.width - 120) / 2;
         _timer.cancel(); // Arrête le timer de mouvement
       });
@@ -61,13 +78,11 @@ class _WelcomeState extends State<Welcome> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              image: DecorationImage(
-                image: BACKGROUND,
-                fit: BoxFit.cover,
-              ),
+          AnimatedOpacity(
+            duration: Duration(seconds: 2),
+            opacity: _backgroundOpacity,
+            child: Container(
+              decoration: _backgroundDecoration,
             ),
           ),
           AnimatedPositioned(
