@@ -333,8 +333,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 Form(
                   key: _formKey,
-                  child: ListView(
-                    shrinkWrap: true,
+                  child: Column(
                     children: <Widget>[
                       buildTextField(
                         controller: _lastnameController,
