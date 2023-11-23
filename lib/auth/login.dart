@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
                   height: 40,
@@ -69,19 +69,20 @@ class _LoginState extends State<Login> {
                   ],
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 50,
                 ),
-                Center(
+                Align(
+                  alignment: Alignment.topLeft,
                   child: Text(
-                    "Connexion",
+                    "Entrez",
                     style: TextStyle(
                         fontFamily: 'PermanentMarker',
-                        fontSize: 40,
+                        fontSize: 20,
                         color: Colors.black),
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 90,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

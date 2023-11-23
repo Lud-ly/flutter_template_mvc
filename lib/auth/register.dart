@@ -319,14 +319,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 50,
                 ),
-                Text(
-                  "Inscription",
-                  style: TextStyle(
-                      fontFamily: 'PermanentMarker',
-                      fontSize: 40,
-                      color: Colors.black),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Obtient l'accès",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontFamily: 'PermanentMarker',
+                        fontSize: 20,
+                        color: Colors.black),
+                  ),
                 ),
                 SizedBox(
                   height: 30,
@@ -385,7 +389,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               value, _passwordController.text);
                         },
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 60),
                       TextButton(
                         onPressed: _registering ? null : _register,
                         style: ButtonStyle(
@@ -405,7 +409,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Colors.deepOrangeAccent),
                               )
                             : Text(
-                                'Créer mon compte',
+                                'Créer',
                               ),
                       ),
                       SizedBox(

@@ -23,7 +23,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       try {
         await _auth.sendPasswordResetEmail(email: _emailController.text.trim());
         // L'e-mail de réinitialisation du mot de passe a été envoyé avec succès.
-        // Vous pouvez afficher un message à l'utilisateur ou le rediriger vers une autre page.
+        // le 23/11/2023 to do : rediriger vers une autre page.
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('E-mail de réinitialisation du mot de passe envoyé.'),
@@ -35,8 +35,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             'Erreur lors de l\'envoi de l\'e-mail de réinitialisation : $error');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-                'Erreur lors de l\'envoi de l\'e-mail de réinitialisation.'),
+            content:
+                Text('Erreur lors de l\'envoi, l\'e-mail ne correspond pas.'),
           ),
         );
       } finally {
