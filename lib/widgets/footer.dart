@@ -38,7 +38,7 @@ class FooterState extends State<Footer> {
 
   @override
   Widget build(BuildContext context) {
-    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.086;
+    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.076;
 
     Widget footer = SizedBox(
       height: _footerHeight,
@@ -142,15 +142,15 @@ class _BubbleButtonState extends State<_BubbleButton> {
                 _goTo(widget._page);
                 _toggleTextVisibility();
               },
-              color: Colors.white,
+              color: Colors.black,
               icon: widget._icon,
-              iconSize: kIsWeb ? 35 : MediaQuery.of(context).size.height * 0.06,
+              iconSize: kIsWeb ? 35 : MediaQuery.of(context).size.height * 0.05,
             ),
           ),
           if (_isTextVisible)
             Text(
               widget._text,
-              style: CustomTextStyle.small(fontColor: Colors.white),
+              style: CustomTextStyle.small(fontColor: Colors.black),
               textAlign: TextAlign.center,
             ),
         ],
