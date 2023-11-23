@@ -4,8 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:whowhats/screens/home.dart';
 import 'package:whowhats/screens/welcome.dart';
-import 'package:whowhats/utils/custom_textstyles.dart';
-import 'package:whowhats/utils/tools_lib.dart';
+import 'package:whowhats/reusable/miscellaneous/custom_textstyles.dart';
+import 'package:whowhats/reusable/libs/tools_lib.dart';
 
 import '../api/firebase_services.dart';
 import '../screens/account.dart';

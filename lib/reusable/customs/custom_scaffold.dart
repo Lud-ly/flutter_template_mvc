@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:whowhats/screens/home.dart';
-import 'package:whowhats/utils/tools_lib.dart';
+import 'package:whowhats/reusable/libs/tools_lib.dart';
 import '../../widgets/header.dart';
 import '../libs/lib_images.dart';
 import 'package:firebase_auth/firebase_auth.dart';

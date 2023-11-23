@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:whowhats/auth/password.dart';
 import 'package:whowhats/auth/register.dart';
 import 'package:whowhats/reusable/animations/bounced_icon.dart';
-import 'package:whowhats/reusable/miscellaneous/shortcuts.dart';
 import 'package:whowhats/screens/home.dart';
-import 'package:whowhats/utils/tools_lib.dart';
+import 'package:whowhats/reusable/libs/tools_lib.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -183,7 +182,6 @@ class _LoginState extends State<Login> {
                     child: Text('Se connecter'),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.black),
-                      foregroundColor: CodeShortcuts.getColor(Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),

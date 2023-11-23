@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import '../../utils/tools_lib.dart';
+import '../libs/tools_lib.dart';
 
 class PasswordField extends StatefulWidget {
   bool _passwordVisible = false;
