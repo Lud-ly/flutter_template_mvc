@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:whowhats/utils/shortcuts.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   @override
@@ -84,6 +85,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 onPressed: _loading ? null : _sendResetEmail,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.black),
+                  foregroundColor: CodeShortcuts.getColor(Colors.white),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),

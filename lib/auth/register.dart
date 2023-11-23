@@ -5,6 +5,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:whowhats/api/firebase_services.dart';
 import 'package:whowhats/auth/login.dart';
 import 'package:whowhats/screens/home.dart';
+import 'package:whowhats/utils/shortcuts.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -393,6 +394,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.black),
+                          foregroundColor: CodeShortcuts.getColor(Colors.white),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
