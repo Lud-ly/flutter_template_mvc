@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:whowhats/reusable/miscellaneous/rounded_buttons.dart';
 import 'dart:async';
 
-import '../reusable/lib_images.dart';
-import '../reusable/rounded_buttons.dart';
+import '../reusable/libs/lib_images.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);

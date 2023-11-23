@@ -144,7 +144,7 @@ class _BubbleButtonState extends State<_BubbleButton> {
               },
               color: Colors.black,
               icon: widget._icon,
-              iconSize: kIsWeb ? 35 : MediaQuery.of(context).size.height * 0.05,
+              iconSize: kIsWeb ? 35 : MediaQuery.of(context).size.height * 0.04,
             ),
           ),
           if (_isTextVisible)

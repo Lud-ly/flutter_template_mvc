@@ -1,9 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../auth/login.dart';
+import 'package:whowhats/auth/login.dart';
 
 class RoundedButton extends StatelessWidget {
   RoundedButton(

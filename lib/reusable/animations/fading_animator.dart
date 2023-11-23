@@ -1,7 +1,6 @@
 import 'package:fading_widget_animation/core/fading_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../reusable/image_path.dart';
+import 'package:whowhats/reusable/miscellaneous/image_path.dart';
 
 class WidgetFadingAnimator extends StatelessWidget {
   @override

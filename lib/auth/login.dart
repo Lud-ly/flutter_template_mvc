@@ -4,12 +4,10 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
 import 'package:whowhats/auth/password.dart';
 import 'package:whowhats/auth/register.dart';
-import 'package:whowhats/reusable/bounced_icon.dart';
+import 'package:whowhats/reusable/animations/bounced_icon.dart';
+import 'package:whowhats/reusable/miscellaneous/shortcuts.dart';
 import 'package:whowhats/screens/home.dart';
 import 'package:whowhats/utils/tools_lib.dart';
-
-import '../reusable/lib_inputs.dart';
-import '../reusable/shortcuts.dart';
 
 class Login extends StatefulWidget {
   @override

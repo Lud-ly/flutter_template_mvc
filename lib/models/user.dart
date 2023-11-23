@@ -1,5 +1,5 @@
 import 'package:whowhats/models/adresse.dart';
-import 'package:whowhats/reusable/lib_images.dart';
+import 'package:whowhats/reusable/libs/lib_images.dart';
 
 enum Role { admin, livreur, user }
 

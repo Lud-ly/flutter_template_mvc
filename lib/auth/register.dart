@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:whowhats/api/firebase_services.dart';
 import 'package:whowhats/auth/login.dart';
+import 'package:whowhats/reusable/miscellaneous/shortcuts.dart';
 import 'package:whowhats/screens/home.dart';
-
-import '../reusable/shortcuts.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -324,7 +323,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Obtient l'accès",
+                    "Obtenez l'accès",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontFamily: 'PermanentMarker',

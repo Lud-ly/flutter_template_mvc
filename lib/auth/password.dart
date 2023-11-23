@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../reusable/shortcuts.dart';
+import '../reusable/miscellaneous/shortcuts.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   @override

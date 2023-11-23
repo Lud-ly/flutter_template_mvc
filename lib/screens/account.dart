@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../reusable/custom_scaffold.dart';
+import '../reusable/miscellaneous/custom_scaffold.dart';
 
 late User loggedinUser;
 
