@@ -198,6 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
     required void Function() onToggleVisibility,
     required bool isVisible,
     required String? Function(String?) validator,
+    required String confirmValue,
   }) {
     return TextFormField(
       controller: controller,
@@ -249,7 +250,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  String? validatePassword(String? value) {
+  String? validatePassword(String? value, String? confirmValue) {
     showSpinner = false;
     _registering = false;
     if (value == null || value.isEmpty) {
@@ -257,7 +258,9 @@ class _RegisterPageState extends State<RegisterPage> {
     } else if (value.length < 6) {
       return 'Il doit comporter au moins 6 caractères';
     } else if (!isValidPassword(value)) {
-      return 'trop faible, au moins une majuscule et un chiffre.';
+      return 'Trop faible, au moins une majuscule et un chiffre.';
+    } else if (value != confirmValue) {
+      return 'Les mots de passe ne correspondent pas.';
     }
     return null;
   }
@@ -365,8 +368,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelText: 'Password',
                         onToggleVisibility: _togglePasswordVisibility,
                         isVisible: _passwordVisible,
+                        confirmValue: _confirmPasswordController.text,
                         validator: (value) {
-                          return validatePassword(value);
+                          return validatePassword(
+                              value, _confirmPasswordController.text);
                         },
                       ),
                       const SizedBox(height: 15),
@@ -375,8 +380,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelText: 'Confirmer le mot de passe',
                         onToggleVisibility: _toggleConfirmPasswordVisibility,
                         isVisible: _confirmPasswordVisible,
+                        confirmValue: _passwordController.text,
                         validator: (value) {
-                          return validatePassword(value);
+                          return validatePassword(
+                              value, _passwordController.text);
                         },
                       ),
                       const SizedBox(height: 15),
