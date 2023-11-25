@@ -60,9 +60,9 @@ class _LoginState extends State<Login> {
                         child: BouncingIcon(
                           iconChosen: Icons.edit,
                           textChosen: 'S\'incrire',
-                          beginPosition: -5,
+                          beginPosition: -6,
                           endPosition: -2,
-                          duration: 2,
+                          duration: 500,
                         )),
                   ],
                 ),
@@ -177,7 +177,7 @@ class _LoginState extends State<Login> {
                   ],
                 ),
                 SizedBox(
-                  height: SCREEN_HEIGHT(context) * 0.27,
+                  height: SCREEN_HEIGHT(context) * 0.17,
                 ),
                 TextButton(
                     child: Text('Se connecter'),

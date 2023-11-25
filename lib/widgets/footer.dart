@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:whowhats/screens/home.dart';
 import 'package:whowhats/screens/welcome.dart';
-import 'package:whowhats/reusable/miscellaneous/custom_textstyles.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
 
 import '../api/firebase_services.dart';
@@ -12,8 +11,8 @@ import '../screens/account.dart';
 import '../screens/alarm.dart';
 
 class Footer extends StatefulWidget {
-  final ScrollController? _scrollControlleur;
-  const Footer([this._scrollControlleur, Key? key]) : super(key: key);
+  final ScrollController _scrollController;
+  const Footer(this._scrollController, [Key? key]) : super(key: key);
 
   @override
   State<Footer> createState() => FooterState();
@@ -26,12 +25,12 @@ class FooterState extends State<Footer> {
   void initState() {
     super.initState();
 
-    widget._scrollControlleur?.addListener(_listen);
+    widget._scrollController.addListener(_listen);
   }
 
   @override
-  dispose() {
-    widget._scrollControlleur?.removeListener(_listen);
+  void dispose() {
+    widget._scrollController.removeListener(_listen);
 
     super.dispose();
   }
@@ -81,7 +80,7 @@ class FooterState extends State<Footer> {
       ),
     );
 
-    if (widget._scrollControlleur != null) {
+    if (widget._scrollController != null) {
       return AnimatedContainer(
         duration: const Duration(milliseconds: 700),
         child: Wrap(
@@ -94,17 +93,19 @@ class FooterState extends State<Footer> {
   }
 
   _listen() {
-    final direction = widget._scrollControlleur?.position.userScrollDirection;
+    final direction = widget._scrollController.position.userScrollDirection;
     if (direction == ScrollDirection.forward) {
       if (_isHidden) {
-        _isHidden = false;
+        setState(() {
+          _isHidden = false;
+        });
       }
-      setState(() {});
     } else if (direction == ScrollDirection.reverse) {
       if (!_isHidden) {
-        _isHidden = true;
+        setState(() {
+          _isHidden = true;
+        });
       }
-      setState(() {});
     }
   }
 }
@@ -122,14 +123,6 @@ class _BubbleButton extends StatefulWidget {
 }
 
 class _BubbleButtonState extends State<_BubbleButton> {
-  bool _isTextVisible = false;
-
-  void _toggleTextVisibility() {
-    setState(() {
-      _isTextVisible = !_isTextVisible;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -140,19 +133,12 @@ class _BubbleButtonState extends State<_BubbleButton> {
             child: IconButton(
               onPressed: () {
                 _goTo(widget._page);
-                _toggleTextVisibility();
               },
               color: Colors.black,
               icon: widget._icon,
               iconSize: kIsWeb ? 35 : MediaQuery.of(context).size.height * 0.04,
             ),
           ),
-          if (_isTextVisible)
-            Text(
-              widget._text,
-              style: CustomTextStyle.small(fontColor: Colors.black),
-              textAlign: TextAlign.center,
-            ),
         ],
       ),
     );

@@ -31,7 +31,7 @@ class _BouncingIconState extends State<BouncingIcon>
     super.initState();
 
     _controller = AnimationController(
-      duration: Duration(seconds: widget.duration),
+      duration: Duration(milliseconds: widget.duration),
       vsync: this,
     );
 
@@ -86,9 +86,6 @@ class _BouncingIconState extends State<BouncingIcon>
             fontSize: 10,
             color: Colors.black,
           ),
-        ),
-        SizedBox(
-          width: 8,
         ),
         AnimatedBuilder(
           animation: _animation,

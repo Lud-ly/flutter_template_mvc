@@ -14,42 +14,33 @@ class CustomScaffold extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
   CustomScaffold({required this.body, required this.scrollController, Key? key})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: SCREEN_HEIGHT(context),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: HOMEBACKGROUND,
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          children: [
-            Header(),
-            Expanded(
+      body: Column(
+        children: [
+          Header(),
+          Expanded(
+            child: SingleChildScrollView(
+              controller: scrollController,
               child: Container(
                 padding: const EdgeInsets.all(0),
                 width: SCREEN_WIDTH(context),
                 decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(kIsWeb ? 40 : 20))),
+                  color: Colors.transparent,
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(kIsWeb ? 40 : 20)),
+                ),
                 child: body,
               ),
             ),
-            Footer(
-              scrollController,
-            ),
-          ],
-        ),
+          ),
+          Footer(
+            scrollController!,
+          ),
+        ],
       ),
-      // ),
     );
   }
-}
-
-abstract class CustomHeader extends StatefulWidget {
-  const CustomHeader({Key? key}) : super(key: key);
 }
