@@ -478,6 +478,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
+  liquid_ui:
+    dependency: "direct main"
+    description:
+      name: liquid_ui
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+9"
   matcher:
     dependency: transitive
     description:
@@ -774,6 +781,13 @@ packages:
     dependency: transitive
     description:
       name: visibility_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
+  wave:
+    dependency: "direct main"
+    description:
+      name: wave
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.2"

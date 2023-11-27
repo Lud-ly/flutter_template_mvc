@@ -83,8 +83,8 @@ class _GoButton3DState extends State<GoButton3D>
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color.fromARGB(208, 255, 255, 255),
-                    Color.fromARGB(189, 255, 255, 255)
+                    Color.fromARGB(255, 9, 205, 16),
+                    Color.fromARGB(255, 10, 255, 18)
                   ],
                 )
               : LinearGradient(
@@ -98,7 +98,7 @@ class _GoButton3DState extends State<GoButton3D>
           boxShadow: isTapped
               ? [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.9),
+                    color: Color.fromARGB(255, 9, 205, 16).withOpacity(0.9),
                     blurRadius: 10,
                     offset: Offset(5, 5),
                   ),

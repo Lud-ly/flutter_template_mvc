@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:whowhats/auth/password.dart';
 import 'package:whowhats/auth/register.dart';
 import 'package:whowhats/reusable/animations/bounced_icon.dart';
-import 'package:whowhats/screens/home.dart';
+import 'package:whowhats/screens/changeAvatar.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
 import 'package:whowhats/utils/shortcuts.dart';
 
@@ -31,7 +31,8 @@ class _LoginState extends State<Login> {
         inAsyncCall: showSpinner,
         color: Colors.black,
         progressIndicator: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrangeAccent),
+          valueColor:
+              AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 13, 240, 21)),
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -54,16 +55,19 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     TextButton(
-                        onPressed: () {
-                          Get.to(() => RegisterPage());
-                        },
-                        child: BouncingIcon(
-                          iconChosen: Icons.edit,
-                          textChosen: 'S\'incrire',
-                          beginPosition: -6,
-                          endPosition: -2,
-                          duration: 500,
-                        )),
+                      onPressed: () {
+                        Get.to(() => RegisterPage());
+                      },
+                      child: BouncingIcon(
+                        iconChosen: Icons.edit,
+                        SizeIconChosen: 18.0,
+                        textChosen: 'S\'incrire',
+                        fSizeChosen: 10.0,
+                        beginPosition: -6,
+                        endPosition: -2,
+                        duration: 500,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -199,7 +203,7 @@ class _LoginState extends State<Login> {
                         final user = await _auth.signInWithEmailAndPassword(
                             email: email, password: password);
                         if (user != null) {
-                          Get.to(() => HomePage());
+                          Get.to(() => ChangeAvatarPage());
                         }
                       } catch (e) {
                         print(e);

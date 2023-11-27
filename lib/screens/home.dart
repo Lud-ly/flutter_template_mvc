@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../reusable/customs/custom_scaffold.dart';
 
-late User loggedinUser;
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -11,61 +9,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _auth = FirebaseAuth.instance;
+  late User loggedinUser;
   late ScrollController _scrollController;
+
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    // Future.delayed(Duration.zero, () => _showExplanationDialog(context));
-  }
-
-  Future<void> _showExplanationDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible:
-          true, // Permet de fermer le pop-up en cliquant en dehors
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white
-              .withOpacity(0.9), // Fond blanc légèrement transparent
-          title: Text(
-            'Bienvenue !',
-            style: TextStyle(
-              fontFamily: 'PermanentMarker',
-              color: Colors.black,
-            ),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(
-                  'Bienvenue dans votre application. Nous vous invitons à changer votre avatar dans la page Mon compte si vous le souhaitez.',
-                  style: TextStyle(
-                    fontFamily: 'PermanentMarker',
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'Fermer',
-                style: TextStyle(
-                  fontFamily: 'PermanentMarker',
-                  color: Colors.black,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    getCurrentUser();
   }
 
   @override
@@ -92,101 +45,20 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
+          SizedBox(height: 50),
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Home !',
+                style: TextStyle(
+                    fontFamily: 'PermanentMarker',
+                    color: Colors.black,
+                    fontSize: 40),
+              ),
+            ),
+          ),
         ],
       ),
       scrollController: _scrollController,

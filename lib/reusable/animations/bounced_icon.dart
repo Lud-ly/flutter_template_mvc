@@ -7,10 +7,14 @@ class BouncingIcon extends StatefulWidget {
   final double beginPosition;
   final double endPosition;
   final int duration;
+  final double fSizeChosen;
+  final double SizeIconChosen;
 
   const BouncingIcon({
     required this.textChosen,
+    required this.fSizeChosen,
     required this.iconChosen,
+    required this.SizeIconChosen,
     required this.beginPosition,
     required this.endPosition,
     required this.duration,
@@ -83,7 +87,7 @@ class _BouncingIconState extends State<BouncingIcon>
           widget.textChosen,
           style: TextStyle(
             fontFamily: 'PermanentMarker',
-            fontSize: 10,
+            fontSize: widget.fSizeChosen,
             color: Colors.black,
           ),
         ),
@@ -97,7 +101,7 @@ class _BouncingIconState extends State<BouncingIcon>
                 child: Icon(
                   widget.iconChosen,
                   color: Colors.black,
-                  size: 18.0,
+                  size: widget.SizeIconChosen,
                 ),
               ),
             );

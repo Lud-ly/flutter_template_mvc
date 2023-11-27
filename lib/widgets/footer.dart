@@ -2,13 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:whowhats/screens/home.dart';
 import 'package:whowhats/screens/welcome.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
 
 import '../api/firebase_services.dart';
+import '../screens/home.dart';
 import '../screens/account.dart';
-import '../screens/alarm.dart';
 
 class Footer extends StatefulWidget {
   final ScrollController _scrollController;
@@ -37,46 +36,49 @@ class FooterState extends State<Footer> {
 
   @override
   Widget build(BuildContext context) {
-    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.076;
+    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.065;
 
     Widget footer = SizedBox(
       height: _footerHeight,
       width: SCREEN_WIDTH(context),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _BubbleButton(
-                  _PageType.home,
-                  Icon(Icons.home),
-                  "Home",
-                  key: const Key("goToHomeBtn"),
+      child: Container(
+        color: Colors.white,
+        child: CustomPaint(
+          painter: WavePainter(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      _BubbleButton(
+                        _PageType.home,
+                        Icon(Icons.home),
+                        "Home",
+                        key: const Key("goToHomeBtn"),
+                      ),
+                      _BubbleButton(
+                        _PageType.alarm,
+                        Icon(Icons.alarm),
+                        "Alarme",
+                        key: const Key("goToAlarmeBtn"),
+                      ),
+                      _BubbleButton(
+                        _PageType.account,
+                        Icon(Icons.account_box),
+                        "Account",
+                        key: const Key("goToAccountBtn"),
+                      ),
+                    ],
+                  ),
                 ),
-                _BubbleButton(
-                  _PageType.alarm,
-                  Icon(Icons.alarm),
-                  "Alarme",
-                  key: const Key("goToAlarmeBtn"),
-                ),
-                _BubbleButton(
-                  _PageType.account,
-                  Icon(Icons.account_box),
-                  "Account",
-                  key: const Key("goToAccountBtn"),
-                ),
-                _BubbleButton(
-                  _PageType.logout,
-                  Icon(Icons.logout),
-                  "Deconnexion",
-                  key: const Key("goToDeconnexionBtn"),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
 
@@ -110,6 +112,59 @@ class FooterState extends State<Footer> {
   }
 }
 
+class WavePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black // Changer la couleur ici
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0; // Changer l'épaisseur ici
+
+    final path = Path();
+    path.moveTo(0, 0); // Commence au coin supérieur gauche
+
+    // Premier point de contrôle
+    path.quadraticBezierTo(size.width / 4, -20.0, size.width / 2, 0);
+
+    // Deuxième point de contrôle
+    path.quadraticBezierTo(3 * size.width / 4, 20.0, size.width, 0);
+
+    path.lineTo(
+        size.width, size.height); // Ligne verticale jusqu'au bas du footer
+    path.lineTo(
+        0, size.height); // Ligne horizontale jusqu'au coin inférieur gauche
+
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+class WaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height);
+    path.quadraticBezierTo(
+        size.width / 4, size.height - 30.0, size.width / 2, size.height);
+    path.quadraticBezierTo(
+        3 * size.width / 4, size.height - 30.0, size.width, size.height);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
 class _BubbleButton extends StatefulWidget {
   final _PageType _page;
   final String _text;
@@ -136,7 +191,7 @@ class _BubbleButtonState extends State<_BubbleButton> {
               },
               color: Colors.black,
               icon: widget._icon,
-              iconSize: kIsWeb ? 35 : MediaQuery.of(context).size.height * 0.04,
+              iconSize: 35,
             ),
           ),
         ],
@@ -150,7 +205,7 @@ class _BubbleButtonState extends State<_BubbleButton> {
         Get.to(() => HomePage());
         break;
       case _PageType.alarm:
-        Get.to(() => AlarmPage());
+        Get.to(() => AccountPage());
         break;
       case _PageType.account:
         Get.to(() => AccountPage());

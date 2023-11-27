@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
-import '../../widgets/header.dart';
-import '../libs/lib_images.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:whowhats/widgets/header.dart';
 
 import '../../widgets/footer.dart';
 
@@ -18,6 +17,7 @@ class CustomScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: Column(
         children: [
           Header(),

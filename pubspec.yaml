@@ -57,6 +57,8 @@ dependencies:
   flutter_native_splash: ^2.1.6
   audioplayers: ^0.20.1
   audioplayers_platform_interface: ^2.0.2
+  liquid_ui: ^1.0.0+9
+  wave: ^0.2.2
 
 dev_dependencies:
   flutter_test:
