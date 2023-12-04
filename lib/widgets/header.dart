@@ -37,7 +37,7 @@ class _HeaderState extends State<Header> {
       shape: Border(
         bottom: BorderSide(
           color: Colors.black,
-          width: 3.0,
+          width: 4.0,
         ),
       ),
     );

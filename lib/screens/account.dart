@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:whowhats/api/firebase_services.dart';
+import 'package:whowhats/reusable/libs/tools_lib.dart';
 import 'package:whowhats/screens/changeAvatar.dart';
 import 'package:whowhats/screens/welcome.dart';
 
@@ -42,7 +43,7 @@ class _AccountPageState extends State<AccountPage> {
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'Mon compte !',
+                'Mon compte',
                 style: TextStyle(
                     fontFamily: 'PermanentMarker',
                     color: Colors.black,
@@ -71,6 +72,7 @@ class _AccountPageState extends State<AccountPage> {
                   TextStyle(fontFamily: 'PermanentMarker', color: Colors.black),
             ),
           ),
+          SizedBox(height: 500),
         ],
       ),
       scrollController: _scrollController,

@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    getCurrentUser();
+    // getCurrentUser();
   }
 
   @override
@@ -45,13 +45,13 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 50),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.topLeft,
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'Home !',
+                'Hello',
+                textAlign: TextAlign.left,
                 style: TextStyle(
                     fontFamily: 'PermanentMarker',
                     color: Colors.black,
@@ -59,6 +59,21 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          SizedBox(height: 10),
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Hme',
+                style: TextStyle(
+                    fontFamily: 'PermanentMarker',
+                    color: Colors.black,
+                    fontSize: 20),
+              ),
+            ),
+          ),
+          SizedBox(height: 500),
         ],
       ),
       scrollController: _scrollController,

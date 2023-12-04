@@ -143,8 +143,8 @@ class _LoginState extends State<Login> {
                     TextField(
                       obscureText: !_passwordVisible,
                       decoration: InputDecoration(
-                        hintText: "passwordExemple82",
-                        labelText: "password",
+                        hintText: "Exemple99",
+                        labelText: "Mot de passe",
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
@@ -184,7 +184,12 @@ class _LoginState extends State<Login> {
                   height: SCREEN_HEIGHT(context) * 0.17,
                 ),
                 TextButton(
-                    child: Text('Se connecter'),
+                    child: Text(
+                      'Se connecter',
+                      style: TextStyle(
+                        fontFamily: 'PermanentMarker',
+                      ),
+                    ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.black),
                       foregroundColor: CodeShortcuts.getColor(Colors.white),

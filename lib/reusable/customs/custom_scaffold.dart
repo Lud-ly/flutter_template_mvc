@@ -17,7 +17,6 @@ class CustomScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       body: Column(
         children: [
           Header(),
@@ -28,7 +27,7 @@ class CustomScaffold extends StatelessWidget {
                 padding: const EdgeInsets.all(0),
                 width: SCREEN_WIDTH(context),
                 decoration: const BoxDecoration(
-                  color: Colors.transparent,
+                  color: Colors.white,
                   borderRadius:
                       BorderRadius.all(Radius.circular(kIsWeb ? 40 : 20)),
                 ),

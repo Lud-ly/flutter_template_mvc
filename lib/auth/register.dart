@@ -408,7 +408,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Colors.deepOrangeAccent),
                               )
                             : Text(
-                                'Créer',
+                                'Valider',
+                                style: TextStyle(
+                                  fontFamily: 'PermanentMarker',
+                                ),
                               ),
                       ),
                       SizedBox(

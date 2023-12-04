@@ -36,7 +36,7 @@ class FooterState extends State<Footer> {
 
   @override
   Widget build(BuildContext context) {
-    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.065;
+    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.085;
 
     Widget footer = SizedBox(
       height: _footerHeight,
@@ -49,7 +49,7 @@ class FooterState extends State<Footer> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.all(3),
+                  padding: EdgeInsets.all(10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,16 +61,16 @@ class FooterState extends State<Footer> {
                         key: const Key("goToHomeBtn"),
                       ),
                       _BubbleButton(
-                        _PageType.alarm,
-                        Icon(Icons.alarm),
-                        "Alarme",
-                        key: const Key("goToAlarmeBtn"),
-                      ),
-                      _BubbleButton(
                         _PageType.account,
                         Icon(Icons.account_box),
                         "Account",
                         key: const Key("goToAccountBtn"),
+                      ),
+                      _BubbleButton(
+                        _PageType.account,
+                        Icon(Icons.light_mode),
+                        "light",
+                        key: const Key("goToAlarmeBtn"),
                       ),
                     ],
                   ),
@@ -118,13 +118,13 @@ class WavePainter extends CustomPainter {
     final paint = Paint()
       ..color = Colors.black // Changer la couleur ici
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0; // Changer l'épaisseur ici
+      ..strokeWidth = 4.0; // Changer l'épaisseur ici
 
     final path = Path();
     path.moveTo(0, 0); // Commence au coin supérieur gauche
 
     // Premier point de contrôle
-    path.quadraticBezierTo(size.width / 4, -20.0, size.width / 2, 0);
+    path.quadraticBezierTo(size.width / 4, -15.0, size.width / 2, 0);
 
     // Deuxième point de contrôle
     path.quadraticBezierTo(3 * size.width / 4, 20.0, size.width, 0);
@@ -169,6 +169,7 @@ class _BubbleButton extends StatefulWidget {
   final _PageType _page;
   final String _text;
   final Icon _icon;
+  bool isSelected = false;
 
   _BubbleButton(this._page, this._icon, this._text, {Key? key})
       : super(key: key);
@@ -189,9 +190,12 @@ class _BubbleButtonState extends State<_BubbleButton> {
               onPressed: () {
                 _goTo(widget._page);
               },
-              color: Colors.black,
+              color: widget.isSelected
+                  ? Color.fromARGB(255, 50, 205, 55)
+                  : Colors
+                      .black, // Changer la couleur en fonction de la sélection
               icon: widget._icon,
-              iconSize: 35,
+              iconSize: 40,
             ),
           ),
         ],
@@ -202,15 +206,21 @@ class _BubbleButtonState extends State<_BubbleButton> {
   _goTo(_PageType page) {
     switch (page) {
       case _PageType.home:
+        setState(() {
+          widget.isSelected = true;
+        });
         Get.to(() => HomePage());
         break;
-      case _PageType.alarm:
-        Get.to(() => AccountPage());
-        break;
       case _PageType.account:
+        setState(() {
+          widget.isSelected = true;
+        });
         Get.to(() => AccountPage());
         break;
       case _PageType.logout:
+        setState(() {
+          widget.isSelected = true;
+        });
         FirebaseServices.disconnect();
         Get.to(() => Welcome());
         break;
@@ -218,4 +228,4 @@ class _BubbleButtonState extends State<_BubbleButton> {
   }
 }
 
-enum _PageType { home, alarm, account, logout }
+enum _PageType { home, account, logout }
