@@ -2,70 +2,87 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:whowhats/widgets/rounded_image.dart';
-import '../reusable/images_lib.dart';
-import '../reusable/shortcuts.dart';
-import '../screen/home.dart';
-import '../screen/login.dart';
-import '../screen/signup.dart';
+import 'package:whowhats/screens/welcome.dart';
+import 'package:whowhats/reusable/libs/tools_lib.dart';
+
+import '../api/firebase_services.dart';
+import '../screens/home.dart';
+import '../screens/account.dart';
 
 class Footer extends StatefulWidget {
-  final ScrollController? _scrollControlleur;
-  const Footer([this._scrollControlleur, Key? key]) : super(key: key);
+  final ScrollController _scrollController;
+  const Footer(this._scrollController, [Key? key]) : super(key: key);
 
   @override
-  State<Footer> createState() => _FooterState();
+  State<Footer> createState() => FooterState();
 }
 
-class _FooterState extends State<Footer> {
+class FooterState extends State<Footer> {
   bool _isHidden = false;
-  final double _footerHeight = kIsWeb ? 65 : 85;
 
   @override
   void initState() {
     super.initState();
-    widget._scrollControlleur?.addListener(_listen);
+
+    widget._scrollController.addListener(_listen);
   }
 
   @override
-  dispose() {
-    widget._scrollControlleur?.removeListener(_listen);
+  void dispose() {
+    widget._scrollController.removeListener(_listen);
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.085;
+
     Widget footer = SizedBox(
       height: _footerHeight,
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const <Widget>[
-                _BubbleButton(
-                  _PageType.home,
-                  "assets/images/undraw_handcrafts_house.png",
-                  key: const Key("Home"),
+      width: SCREEN_WIDTH(context),
+      child: Container(
+        color: Colors.white,
+        child: CustomPaint(
+          painter: WavePainter(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      _BubbleButton(
+                        _PageType.home,
+                        Icon(Icons.home),
+                        "Home",
+                        key: const Key("goToHomeBtn"),
+                      ),
+                      _BubbleButton(
+                        _PageType.account,
+                        Icon(Icons.account_box),
+                        "Account",
+                        key: const Key("goToAccountBtn"),
+                      ),
+                      _BubbleButton(
+                        _PageType.account,
+                        Icon(Icons.light_mode),
+                        "light",
+                        key: const Key("goToAlarmeBtn"),
+                      ),
+                    ],
+                  ),
                 ),
-                _BubbleButton(
-                  _PageType.login,
-                  "assets/images/undraw_handcrafts_briefcase.png",
-                  key: const Key("search"),
-                ),
-                _BubbleButton(
-                  _PageType.registration,
-                  "assets/images/undraw_handcrafts_search.png",
-                  key: const Key("file"),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
 
-    if (widget._scrollControlleur != null) {
+    if (widget._scrollController != null) {
       return AnimatedContainer(
         duration: const Duration(milliseconds: 700),
         child: Wrap(
@@ -78,44 +95,107 @@ class _FooterState extends State<Footer> {
   }
 
   _listen() {
-    final direction = widget._scrollControlleur?.position.userScrollDirection;
+    final direction = widget._scrollController.position.userScrollDirection;
     if (direction == ScrollDirection.forward) {
       if (_isHidden) {
-        _isHidden = false;
+        setState(() {
+          _isHidden = false;
+        });
       }
-      setState(() {});
     } else if (direction == ScrollDirection.reverse) {
       if (!_isHidden) {
-        _isHidden = true;
+        setState(() {
+          _isHidden = true;
+        });
       }
-      setState(() {});
     }
   }
 }
 
-class _BubbleButton extends StatelessWidget {
-  final _PageType _page;
-  final String _imagePath;
+class WavePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black // Changer la couleur ici
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4.0; // Changer l'épaisseur ici
 
-  const _BubbleButton(this._page, this._imagePath, {Key? key})
+    final path = Path();
+    path.moveTo(0, 0); // Commence au coin supérieur gauche
+
+    // Premier point de contrôle
+    path.quadraticBezierTo(size.width / 4, -15.0, size.width / 2, 0);
+
+    // Deuxième point de contrôle
+    path.quadraticBezierTo(3 * size.width / 4, 20.0, size.width, 0);
+
+    path.lineTo(
+        size.width, size.height); // Ligne verticale jusqu'au bas du footer
+    path.lineTo(
+        0, size.height); // Ligne horizontale jusqu'au coin inférieur gauche
+
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+class WaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height);
+    path.quadraticBezierTo(
+        size.width / 4, size.height - 30.0, size.width / 2, size.height);
+    path.quadraticBezierTo(
+        3 * size.width / 4, size.height - 30.0, size.width, size.height);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
+class _BubbleButton extends StatefulWidget {
+  final _PageType _page;
+  final String _text;
+  final Icon _icon;
+  bool isSelected = false;
+
+  _BubbleButton(this._page, this._icon, this._text, {Key? key})
       : super(key: key);
 
   @override
+  _BubbleButtonState createState() => _BubbleButtonState();
+}
+
+class _BubbleButtonState extends State<_BubbleButton> {
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: CodeShortcuts.getAppWidth(context) * 0.3,
+      width: MediaQuery.of(context).size.width * 0.2,
       child: Column(
         children: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                textStyle:
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-            onPressed: () => _goTo(_page),
-            child: RoundedImage(
-              _imagePath,
-              50,
-              50,
+          Flexible(
+            child: IconButton(
+              onPressed: () {
+                _goTo(widget._page);
+              },
+              color: widget.isSelected
+                  ? Color.fromARGB(255, 50, 205, 55)
+                  : Colors
+                      .black, // Changer la couleur en fonction de la sélection
+              icon: widget._icon,
+              iconSize: 40,
             ),
           ),
         ],
@@ -125,17 +205,27 @@ class _BubbleButton extends StatelessWidget {
 
   _goTo(_PageType page) {
     switch (page) {
-      case _PageType.login:
-        Get.to(() => Login());
-        break;
-      case _PageType.registration:
-        Get.to(() => Registration());
-        break;
       case _PageType.home:
-        Get.to(() => Home());
+        setState(() {
+          widget.isSelected = true;
+        });
+        Get.to(() => HomePage());
+        break;
+      case _PageType.account:
+        setState(() {
+          widget.isSelected = true;
+        });
+        Get.to(() => AccountPage());
+        break;
+      case _PageType.logout:
+        setState(() {
+          widget.isSelected = true;
+        });
+        FirebaseServices.disconnect();
+        Get.to(() => Welcome());
         break;
     }
   }
 }
 
-enum _PageType { login, registration, home }
+enum _PageType { home, account, logout }
