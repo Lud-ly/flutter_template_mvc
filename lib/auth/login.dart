@@ -4,9 +4,10 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
 import 'package:whowhats/auth/password.dart';
 import 'package:whowhats/auth/register.dart';
+import 'package:whowhats/auth/service.dart';
 import 'package:whowhats/reusable/animations/bounced_icon.dart';
-import 'package:whowhats/screens/changeAvatar.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
+import 'package:whowhats/screens/home.dart';
 import 'package:whowhats/utils/shortcuts.dart';
 
 class Login extends StatefulWidget {
@@ -14,7 +15,7 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-final _auth = FirebaseAuth.instance;
+AuthService _authService = AuthService();
 
 class _LoginState extends State<Login> {
   late String email;
@@ -121,8 +122,7 @@ class _LoginState extends State<Login> {
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(
-                                    'Tu ne sais pas ce qu\'est une adresse email ?'),
+                                content: Text('email valide ?'),
                               ),
                             );
                           },
@@ -204,44 +204,30 @@ class _LoginState extends State<Login> {
                         showSpinner = true;
                         errorMessage = '';
                       });
+
                       try {
-                        final user = await _auth.signInWithEmailAndPassword(
-                            email: email, password: password);
+                        final user = await _authService
+                            .signInWithEmailAndPassword(email, password);
                         if (user != null) {
-                          Get.to(() => ChangeAvatarPage());
+                          // Récupérer l'ID de l'utilisateur après la connexion réussie
+                          String userId = await _authService.getUserId() ?? '';
+                          print('User ID: $userId');
+                          Get.to(() => HomePage());
                         }
+                      } on FirebaseAuthException catch (e) {
+                        print(e);
+                        setState(() {
+                          // Gestion des erreurs
+                          errorMessage = _authService.getErrorMessage(e);
+                        });
                       } catch (e) {
                         print(e);
                         setState(() {
-                          if (e is FirebaseAuthException) {
-                            switch (e.code) {
-                              case 'invalid-email':
-                                errorMessage =
-                                    'Adresse e-mail invalide. Veuillez vérifier.';
-                                break;
-                              case 'user-not-found':
-                                errorMessage =
-                                    'Aucun utilisateur trouvé avec cette adresse e-mail.';
-                                break;
-                              case 'wrong-password':
-                                errorMessage =
-                                    'Mot de passe incorrect. Veuillez réessayer.';
-                                break;
-                              case 'user-disabled':
-                                errorMessage =
-                                    'Ce compte utilisateur a été désactivé.';
-                                break;
-                              default:
-                                errorMessage =
-                                    'Erreur lors de la connexion : ${e.message}';
-                                break;
-                            }
-                          } else {
-                            print(e.toString());
-                            errorMessage = 'Les champs ne peuvent être vide';
-                          }
+                          // Gestion des autres erreurs
+                          errorMessage = 'Erreur inconnue : ${e.toString()}';
                         });
                       }
+
                       setState(() {
                         showSpinner = false;
                       });

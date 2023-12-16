@@ -45,27 +45,13 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'Hello',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontFamily: 'PermanentMarker',
-                    color: Colors.black,
-                    fontSize: 40),
-              ),
-            ),
-          ),
           SizedBox(height: 10),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'Hme',
+                'Home',
                 style: TextStyle(
                     fontFamily: 'PermanentMarker',
                     color: Colors.black,

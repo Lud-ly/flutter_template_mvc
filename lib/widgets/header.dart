@@ -15,9 +15,9 @@ class _HeaderState extends State<Header> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'M',
+            'MVC',
             style: TextStyle(
-                fontSize: 38,
+                fontSize: 28,
                 fontFamily: 'PermanentMarker',
                 color: Colors.black),
           ),
