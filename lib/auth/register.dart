@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:whowhats/api/firebase_services.dart';
 import 'package:whowhats/auth/login.dart';
-import 'package:whowhats/screens/changeAvatar.dart';
+import 'package:whowhats/screens/home.dart';
 import 'package:whowhats/utils/shortcuts.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
           .then((userId) {
         _registering = true;
         if (userId != null) {
-          Get.to(() => ChangeAvatarPage());
+          Get.to(() => HomePage());
         } else {
           setState(() {
             _registering = false;

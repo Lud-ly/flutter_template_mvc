@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:whowhats/api/firebase_services.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
-import 'package:whowhats/screens/changeAvatar.dart';
 import 'package:whowhats/screens/welcome.dart';
 
 import '../reusable/customs/custom_scaffold.dart';
@@ -52,9 +51,7 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ),
           TextButton(
-            onPressed: () {
-              Get.to(() => ChangeAvatarPage());
-            },
+            onPressed: () {},
             child: Text(
               'Changer son avatar',
               style:
