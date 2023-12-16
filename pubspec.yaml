@@ -45,6 +45,7 @@ dependencies:
   mvc_pattern: ^8.12.0
   path_provider: ^2.1.1
   shared_preferences: ^2.2.2
+  flutter_native_splash: ^2.3.7
 
 dev_dependencies:
   flutter_test:
@@ -62,9 +63,11 @@ flutter_icons:
   flutter_lints: ^1.0.0
 
 flutter_native_splash:
-  background_image: assets/images/splash.png
+  background_image: assets/images/mandalas.jpg
   android: true
   ios: true
+  web: false
+  fullscreen: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
