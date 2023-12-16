@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:whowhats/screens/welcome.dart';
 
 late User loggedinUser;
@@ -39,7 +38,6 @@ class MyApp extends StatelessWidget {
           secondary: const Color.fromRGBO(44, 55, 59, 1),
           tertiary: Color.fromARGB(255, 95, 231, 197),
         ),
-        fontFamily: GoogleFonts.permanentMarker().toString(),
         primarySwatch: Colors.blue,
       ),
       initialRoute: 'welcome',

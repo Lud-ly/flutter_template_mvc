@@ -53,18 +53,18 @@ class _ChangeAvatarPageState extends State<ChangeAvatarPage> {
         isLoading = true;
       });
 
-      final pickedFile = await picker.getImage(source: source);
+      // final pickedFile = await picker.getImage(source: source);
 
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
+      // if (pickedFile != null) {
+      //   _image = File(pickedFile.path);
 
-        final Reference storageReference =
-            FirebaseStorage.instance.ref().child('avatars/${loggedinUser.uid}');
-        await storageReference.putFile(_image!);
+      //   final Reference storageReference =
+      //       FirebaseStorage.instance.ref().child('avatars/${loggedinUser.uid}');
+      //   await storageReference.putFile(_image!);
 
-        String downloadURL = await storageReference.getDownloadURL();
-        print('Avatar URL: $downloadURL');
-      }
+      //   String downloadURL = await storageReference.getDownloadURL();
+      //   print('Avatar URL: $downloadURL');
+      // }
 
       setState(() {
         isLoading = false;
