@@ -4,7 +4,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
 import 'package:whowhats/auth/password.dart';
 import 'package:whowhats/auth/register.dart';
-import 'package:whowhats/auth/service.dart';
+import 'package:whowhats/api/login_service.dart';
 import 'package:whowhats/reusable/animations/bounced_icon.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
 import 'package:whowhats/screens/home.dart';
@@ -15,7 +15,7 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-AuthService _authService = AuthService();
+LoginService _authService = LoginService();
 
 class _LoginState extends State<Login> {
   late String email;

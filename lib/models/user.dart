@@ -1,7 +1,7 @@
 import 'package:whowhats/models/adresse.dart';
 import 'package:whowhats/reusable/libs/lib_images.dart';
 
-enum Role { admin, livreur, user }
+enum Role { admin, user }
 
 class User {
   String uid;
@@ -9,7 +9,7 @@ class User {
   String lastName;
   String email;
   String phone;
-  late String photo;
+  late String imageUrl;
   Adress adress;
   Role role;
   String notifToken;
@@ -23,11 +23,11 @@ class User {
       required this.adress,
       required this.role,
       required this.notifToken,
-      String? photo}) {
-    if (photo == null) {
-      this.photo = PATH_USER_DEFAULT;
+      String? imageUrl}) {
+    if (imageUrl == null) {
+      this.imageUrl = PATH_USER_DEFAULT;
     } else {
-      this.photo = photo;
+      this.imageUrl = imageUrl;
     }
   }
 
@@ -41,17 +41,15 @@ class User {
       adress: Adress.fromMap(data["adress"]),
       role: Role.user,
       notifToken: data["notifToken"],
-      photo: data["photo"],
+      imageUrl: data["imageUrl"],
     );
 
-    if (data["photo"] != null && data["photo"] != "") {
-      user.photo = data["photo"];
+    if (data["imageUrl"] != null && data["imageUrl"] != "") {
+      user.imageUrl = data["imageUrl"];
     }
 
     if (data["role"] == Role.admin.toString()) {
       user.role = Role.admin;
-    } else if (data["role"] == Role.livreur.toString()) {
-      user.role = Role.livreur;
     }
     return user;
   }
@@ -63,7 +61,7 @@ class User {
       "lastName": lastName,
       "email": email,
       "phone": phone,
-      "photo": photo,
+      "imageUrl": imageUrl,
       "role": role.toString(),
       "notifToken": notifToken,
       "adress": adress.toMap(),
