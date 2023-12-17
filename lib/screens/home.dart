@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'Home',
+                'Maintenance mode in on !',
                 style: TextStyle(
                     fontFamily: 'PermanentMarker',
                     color: Colors.black,
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SizedBox(height: 500),
+          SizedBox(height: 800),
         ],
       ),
       scrollController: _scrollController,

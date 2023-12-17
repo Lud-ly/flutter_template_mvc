@@ -2,23 +2,24 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class BouncingIcon extends StatefulWidget {
-  final String textChosen;
-  final IconData iconChosen;
+  final String text;
+  final IconData shape;
   final double beginPosition;
   final double endPosition;
   final int duration;
-  final double fSizeChosen;
-  final double SizeIconChosen;
+  final double fSize;
+  final double SizeIcon;
+  final Color? ColorIcon;
 
-  const BouncingIcon({
-    required this.textChosen,
-    required this.fSizeChosen,
-    required this.iconChosen,
-    required this.SizeIconChosen,
-    required this.beginPosition,
-    required this.endPosition,
-    required this.duration,
-  });
+  const BouncingIcon(
+      {required this.text,
+      required this.fSize,
+      required this.shape,
+      required this.SizeIcon,
+      required this.beginPosition,
+      required this.endPosition,
+      required this.duration,
+      this.ColorIcon});
 
   @override
   _BouncingIconState createState() => _BouncingIconState();
@@ -55,7 +56,7 @@ class _BouncingIconState extends State<BouncingIcon>
             }
           });
 
-    _rotationAnimation = Tween<double>(begin: 0, end: 360).animate(
+    _rotationAnimation = Tween<double>(begin: 0, end: 720).animate(
       CurvedAnimation(
         parent: _controller,
         curve: Curves.linear,
@@ -69,7 +70,7 @@ class _BouncingIconState extends State<BouncingIcon>
   void _updateRotation() {
     // Génère un angle aléatoire entre 0 et 360 degrés
     final random = Random();
-    final randomRotation = random.nextDouble() * 360;
+    final randomRotation = random.nextDouble() * 1080;
     _rotationAnimation = Tween<double>(begin: 0, end: randomRotation).animate(
       CurvedAnimation(
         parent: _controller,
@@ -83,29 +84,33 @@ class _BouncingIconState extends State<BouncingIcon>
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          widget.textChosen,
-          style: TextStyle(
-            fontFamily: 'PermanentMarker',
-            fontSize: widget.fSizeChosen,
-            color: Colors.black,
-          ),
-        ),
-        AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) {
-            return Transform.translate(
-              offset: Offset(0, _animation.value),
-              child: Transform.rotate(
-                angle: _rotationAnimation.value * (pi / 180),
-                child: Icon(
-                  widget.iconChosen,
-                  color: Colors.black,
-                  size: widget.SizeIconChosen,
-                ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            // AnimatedBuilder(
+            //   animation: _animation,
+            //   builder: (context, child) {
+            //     return Transform.rotate(
+            //       angle: _rotationAnimation.value * (pi / 180),
+            //       child: Icon(
+            //         widget.shape,
+            //         color:
+            //             widget.ColorIcon ?? const Color.fromARGB(109, 0, 0, 0),
+            //         size: widget.SizeIcon,
+            //       ),
+            //     );
+            //   },
+            // ),
+            Text(
+              widget.text,
+              style: TextStyle(
+                fontFamily: 'PermanentMarker',
+                fontSize: widget.fSize,
+                color: Colors.black,
               ),
-            );
-          },
+            ),
+            // Animated Icon
+          ],
         ),
       ],
     );

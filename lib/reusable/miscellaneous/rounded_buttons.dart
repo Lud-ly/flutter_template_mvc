@@ -31,12 +31,12 @@ class RoundedButton extends StatelessWidget {
   }
 }
 
-class GoButton3D extends StatefulWidget {
+class GoButton extends StatefulWidget {
   @override
-  _GoButton3DState createState() => _GoButton3DState();
+  _GoButtonState createState() => _GoButtonState();
 }
 
-class _GoButton3DState extends State<GoButton3D>
+class _GoButtonState extends State<GoButton>
     with SingleTickerProviderStateMixin {
   bool isTapped = false;
   late AnimationController _controller;
@@ -58,21 +58,14 @@ class _GoButton3DState extends State<GoButton3D>
 
   void _startRotationAnimation() {
     _controller.forward(from: 0.0);
+    setState(() {
+      isTapped = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (details) {
-        setState(() {
-          isTapped = true;
-        });
-      },
-      onTapUp: (details) {
-        setState(() {
-          isTapped = false;
-        });
-      },
       child: Container(
         width: 120,
         height: 120,
@@ -119,9 +112,11 @@ class _GoButton3DState extends State<GoButton3D>
         child: Center(
           child: TextButton(
             onPressed: () {
-              isTapped = true;
               _startRotationAnimation();
               Future.delayed(Duration(milliseconds: 900), () {
+                setState(() {
+                  isTapped = true;
+                });
                 Get.to(() => Login());
               });
             },

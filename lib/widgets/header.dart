@@ -15,7 +15,7 @@ class _HeaderState extends State<Header> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'MVC',
+            'M',
             style: TextStyle(
                 fontSize: 28,
                 fontFamily: 'PermanentMarker',
@@ -23,7 +23,7 @@ class _HeaderState extends State<Header> {
           ),
           ClipOval(
             child: Image(
-              image: AssetImage("assets/images/me.png"),
+              image: AssetImage("assets/images/distress.jpg"),
               width: 40,
               height: 40,
             ),
@@ -37,7 +37,7 @@ class _HeaderState extends State<Header> {
       shape: Border(
         bottom: BorderSide(
           color: Colors.black,
-          width: 4.0,
+          width: 2.0,
         ),
       ),
     );

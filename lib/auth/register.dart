@@ -284,13 +284,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ClipOval(
-                      child: Image(
-                        image: AssetImage("assets/images/me.png"),
-                        width: 40,
-                        height: 40,
-                      ),
-                    ),
                     TextButton(
                       onPressed: () {
                         Get.to(() => Login());
@@ -302,7 +295,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             'Se connecter',
                             style: TextStyle(
                               fontFamily: 'PermanentMarker',
-                              fontSize: 10,
+                              fontSize: 12,
                               color: Colors.black,
                             ),
                           ),
@@ -321,9 +314,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 50,
                 ),
                 Align(
-                  alignment: Alignment.topLeft,
+                  alignment: Alignment.center,
                   child: Text(
-                    "Obtenez l'accès",
+                    "S'inscrire",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontFamily: 'PermanentMarker',

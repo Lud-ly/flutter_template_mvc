@@ -1,11 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:provider/provider.dart';
+import 'package:whowhats/reusable/theme/theme.dart';
+import 'package:whowhats/reusable/theme/theme_provider.dart';
 import 'package:whowhats/screens/welcome.dart';
 
-late User loggedinUser;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -20,7 +21,16 @@ void main() async {
               projectId: "who-whats",
               messagingSenderId: "587216056098",
               appId: "1:587216056098:android:95de075c1ce70e8212bf7b"));
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeProvider>(
+          create: (_) => ThemeProvider(lightTheme, false),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -29,17 +39,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    Provider.of<ThemeProvider>(context, listen: false).loadFromPrefs();
+
     return GetMaterialApp(
       title: 'Who-Whats',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Color.fromARGB(255, 6, 20, 131),
-          secondary: const Color.fromRGBO(44, 55, 59, 1),
-          tertiary: Color.fromARGB(255, 95, 231, 197),
-        ),
-        primarySwatch: Colors.blue,
-      ),
+      theme: themeProvider.getTheme(),
       initialRoute: 'welcome',
       home: Welcome(),
     );

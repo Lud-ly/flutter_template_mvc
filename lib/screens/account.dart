@@ -46,7 +46,7 @@ class _AccountPageState extends State<AccountPage> {
                 style: TextStyle(
                     fontFamily: 'PermanentMarker',
                     color: Colors.black,
-                    fontSize: 40),
+                    fontSize: 23),
               ),
             ),
           ),

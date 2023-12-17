@@ -62,15 +62,15 @@ class FooterState extends State<Footer> {
                       ),
                       _BubbleButton(
                         _PageType.account,
-                        Icon(Icons.account_box),
-                        "Account",
-                        key: const Key("goToAccountBtn"),
-                      ),
-                      _BubbleButton(
-                        _PageType.account,
                         Icon(Icons.light_mode),
                         "light",
                         key: const Key("goToAlarmeBtn"),
+                      ),
+                      _BubbleButton(
+                        _PageType.account,
+                        Icon(Icons.account_box),
+                        "Account",
+                        key: const Key("goToAccountBtn"),
                       ),
                     ],
                   ),
@@ -118,7 +118,7 @@ class WavePainter extends CustomPainter {
     final paint = Paint()
       ..color = Colors.black // Changer la couleur ici
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4.0; // Changer l'épaisseur ici
+      ..strokeWidth = 2.0; // Changer l'épaisseur ici
 
     final path = Path();
     path.moveTo(0, 0); // Commence au coin supérieur gauche
@@ -188,6 +188,7 @@ class _BubbleButtonState extends State<_BubbleButton> {
           Flexible(
             child: IconButton(
               onPressed: () {
+                widget.isSelected = true;
                 _goTo(widget._page);
               },
               color: widget.isSelected
@@ -195,7 +196,7 @@ class _BubbleButtonState extends State<_BubbleButton> {
                   : Colors
                       .black, // Changer la couleur en fonction de la sélection
               icon: widget._icon,
-              iconSize: 40,
+              iconSize: 30,
             ),
           ),
         ],
@@ -206,21 +207,12 @@ class _BubbleButtonState extends State<_BubbleButton> {
   _goTo(_PageType page) {
     switch (page) {
       case _PageType.home:
-        setState(() {
-          widget.isSelected = true;
-        });
         Get.to(() => HomePage());
         break;
       case _PageType.account:
-        setState(() {
-          widget.isSelected = true;
-        });
         Get.to(() => AccountPage());
         break;
       case _PageType.logout:
-        setState(() {
-          widget.isSelected = true;
-        });
         FirebaseServices.disconnect();
         Get.to(() => Welcome());
         break;

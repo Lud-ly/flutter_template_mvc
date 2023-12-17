@@ -76,10 +76,10 @@ class _WelcomeState extends State<Welcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.topLeft,
         children: [
           AnimatedOpacity(
-            duration: Duration(seconds: 2),
+            duration: Duration(seconds: 4),
             opacity: _backgroundOpacity,
             child: Container(
               decoration: _backgroundDecoration,
@@ -90,7 +90,7 @@ class _WelcomeState extends State<Welcome> {
             curve: Curves.easeInOut,
             top: _top,
             left: _left,
-            child: GoButton3D(),
+            child: GoButton(),
           ),
         ],
       ),

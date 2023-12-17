@@ -48,36 +48,28 @@ class _LoginState extends State<Login> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ClipOval(
-                      child: Image(
-                        image: AssetImage("assets/images/me.png"),
-                        width: 40,
-                        height: 40,
-                      ),
-                    ),
                     TextButton(
-                      onPressed: () {
-                        Get.to(() => RegisterPage());
-                      },
-                      child: BouncingIcon(
-                        iconChosen: Icons.edit,
-                        SizeIconChosen: 18.0,
-                        textChosen: 'S\'incrire',
-                        fSizeChosen: 10.0,
-                        beginPosition: -6,
-                        endPosition: -2,
-                        duration: 500,
-                      ),
-                    ),
+                        onPressed: () {
+                          Get.to(() => RegisterPage());
+                        },
+                        child: BouncingIcon(
+                          shape: Icons.edit,
+                          SizeIcon: 22.0,
+                          text: 'S\'incrire',
+                          fSize: 12.0,
+                          beginPosition: -6,
+                          endPosition: -2,
+                          duration: 500,
+                        )),
                   ],
                 ),
                 SizedBox(
                   height: 50,
                 ),
                 Align(
-                  alignment: Alignment.topLeft,
+                  alignment: Alignment.center,
                   child: Text(
-                    "Entrez",
+                    "Connexion",
                     style: TextStyle(
                         fontFamily: 'PermanentMarker',
                         fontSize: 20,
