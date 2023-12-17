@@ -7,7 +7,7 @@ const Color kBlackColor = Colors.black;
 const Color kGreenColor = Colors.greenAccent;
 
 ThemeData lightTheme = ThemeData(
-  primaryColor: kGreenColor,
+  primaryColor: kWhiteColor,
   scaffoldBackgroundColor: kWhiteColor,
   backgroundColor: kWhiteColor,
   primaryColorLight: kWhiteColor,
@@ -23,7 +23,7 @@ ThemeData lightTheme = ThemeData(
 );
 
 ThemeData darkTheme = ThemeData(
-  primaryColor: kGreenColor,
+  primaryColor: kBlackColor,
   scaffoldBackgroundColor: Colors.black,
   highlightColor: kWhiteColor,
   backgroundColor: kBlackColor,

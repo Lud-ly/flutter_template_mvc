@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:whowhats/reusable/theme/theme_provider.dart';
 import 'package:whowhats/screens/welcome.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
 
@@ -36,35 +38,30 @@ class FooterState extends State<Footer> {
 
   @override
   Widget build(BuildContext context) {
-    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.085;
+    final double _footerHeight = kIsWeb ? 80 : SCREEN_HEIGHT(context) * 0.070;
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     Widget footer = SizedBox(
       height: _footerHeight,
       width: SCREEN_WIDTH(context),
       child: Container(
-        color: Colors.white,
+        color: themeProvider.getTheme().primaryColor,
         child: CustomPaint(
           painter: WavePainter(),
           child: Row(
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       _BubbleButton(
                         _PageType.home,
                         Icon(Icons.home),
                         "Home",
                         key: const Key("goToHomeBtn"),
-                      ),
-                      _BubbleButton(
-                        _PageType.account,
-                        Icon(Icons.light_mode),
-                        "light",
-                        key: const Key("goToAlarmeBtn"),
                       ),
                       _BubbleButton(
                         _PageType.account,
@@ -116,7 +113,7 @@ class WavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black // Changer la couleur ici
+      ..color = Colors.grey
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0; // Changer l'épaisseur ici
 
@@ -181,6 +178,8 @@ class _BubbleButton extends StatefulWidget {
 class _BubbleButtonState extends State<_BubbleButton> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.2,
       child: Column(
@@ -188,13 +187,9 @@ class _BubbleButtonState extends State<_BubbleButton> {
           Flexible(
             child: IconButton(
               onPressed: () {
-                widget.isSelected = true;
                 _goTo(widget._page);
               },
-              color: widget.isSelected
-                  ? Color.fromARGB(255, 50, 205, 55)
-                  : Colors
-                      .black, // Changer la couleur en fonction de la sélection
+              color: themeProvider.getTheme().highlightColor,
               icon: widget._icon,
               iconSize: 30,
             ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:whowhats/reusable/theme/theme_provider.dart';
 
 class Header extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return AppBar(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -19,19 +22,17 @@ class _HeaderState extends State<Header> {
             style: TextStyle(
                 fontSize: 28,
                 fontFamily: 'PermanentMarker',
-                color: Colors.black),
+                color: themeProvider.getTheme().highlightColor),
           ),
-          ClipOval(
-            child: Image(
-              image: AssetImage("assets/images/distress.jpg"),
-              width: 40,
-              height: 40,
-            ),
+          Image(
+            image: AssetImage("assets/images/distress.jpg"),
+            width: 40,
+            height: 40,
           ),
         ],
       ),
 
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.getTheme().primaryColor,
       automaticallyImplyLeading: false,
       elevation: 0, // C
       shape: Border(

@@ -2,11 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whowhats/auth/password.dart';
 import 'package:whowhats/auth/register.dart';
 import 'package:whowhats/api/login_service.dart';
 import 'package:whowhats/reusable/animations/bounced_icon.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
+import 'package:whowhats/reusable/theme/theme_provider.dart';
 import 'package:whowhats/screens/home.dart';
 import 'package:whowhats/utils/shortcuts.dart';
 
@@ -27,6 +29,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
@@ -73,7 +77,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                         fontFamily: 'PermanentMarker',
                         fontSize: 20,
-                        color: Colors.black),
+                        color: themeProvider.getTheme().highlightColor),
                   ),
                 ),
                 SizedBox(
@@ -105,11 +109,12 @@ class _LoginState extends State<Login> {
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
-                        labelStyle: TextStyle(color: Colors.black),
+                        labelStyle: TextStyle(
+                            color: themeProvider.getTheme().highlightColor),
                         suffixIcon: IconButton(
                           icon: Icon(
                             Icons.email,
-                            color: Colors.black,
+                            color: themeProvider.getTheme().highlightColor,
                           ),
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -125,8 +130,9 @@ class _LoginState extends State<Login> {
                           borderRadius: BorderRadius.all(Radius.circular(12.0)),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 4.0),
+                          borderSide: BorderSide(
+                              color: themeProvider.getTheme().highlightColor,
+                              width: 4.0),
                           borderRadius: BorderRadius.all(Radius.circular(12.0)),
                         ),
                       ),
@@ -140,13 +146,14 @@ class _LoginState extends State<Login> {
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
-                        labelStyle: TextStyle(color: Colors.black),
+                        labelStyle: TextStyle(
+                            color: themeProvider.getTheme().highlightColor),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _passwordVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Colors.black,
+                            color: themeProvider.getTheme().highlightColor,
                           ),
                           onPressed: () {
                             setState(() {
@@ -155,8 +162,9 @@ class _LoginState extends State<Login> {
                           },
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 2.0),
+                          borderSide: BorderSide(
+                              color: themeProvider.getTheme().highlightColor,
+                              width: 2.0),
                           borderRadius: BorderRadius.all(Radius.circular(12.0)),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -183,7 +191,8 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      backgroundColor: MaterialStateProperty.all(
+                          themeProvider.getTheme().primaryColor),
                       foregroundColor: CodeShortcuts.getColor(Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(

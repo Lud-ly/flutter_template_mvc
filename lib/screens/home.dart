@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:whowhats/reusable/theme/theme_provider.dart';
 import '../reusable/customs/custom_scaffold.dart';
 
 class HomePage extends StatefulWidget {
@@ -41,6 +43,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return CustomScaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                 'Maintenance mode in on !',
                 style: TextStyle(
                     fontFamily: 'PermanentMarker',
-                    color: Colors.black,
+                    color: themeProvider.getTheme().highlightColor,
                     fontSize: 20),
               ),
             ),

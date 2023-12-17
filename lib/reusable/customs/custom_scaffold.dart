@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whowhats/reusable/libs/tools_lib.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:whowhats/reusable/theme/theme_provider.dart';
 import 'package:whowhats/widgets/header.dart';
 
 import '../../widgets/footer.dart';
@@ -16,6 +18,8 @@ class CustomScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       body: Column(
         children: [
@@ -26,8 +30,8 @@ class CustomScaffold extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(0),
                 width: SCREEN_WIDTH(context),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+                decoration: BoxDecoration(
+                  color: themeProvider.getTheme().primaryColor,
                   borderRadius:
                       BorderRadius.all(Radius.circular(kIsWeb ? 40 : 20)),
                 ),
